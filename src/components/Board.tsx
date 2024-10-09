@@ -1,18 +1,20 @@
 import { Component } from 'solid-js';
+import { Rgb } from '../types';
 
 type Props = {
-  size: number;
+  colors: Rgb[];
+  onClick: (cardIndex: number) => void;
 };
 
 export const Board: Component<Props> = (props) => {
-  const boardCards = Array.from({ length: props.size }, (_, i) => i + 1);
-
   return (
     <div class="grid grid-cols-3 gap-5">
-      {boardCards.map((card) => (
-        <button class="btn btn-accent aspect-square h-full w-full">
-          {card}
-        </button>
+      {props.colors.map((color, cardIndex) => (
+        <button
+          class="btn aspect-square h-full transform bg-[var(--card-color)] p-0 hover:bg-[var(--card-color)]"
+          style={{ '--card-color': `rgb(${color.r} ${color.g} ${color.b})` }}
+          onClick={() => props.onClick(cardIndex)}
+        ></button>
       ))}
     </div>
   );
