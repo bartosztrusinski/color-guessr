@@ -1,26 +1,37 @@
-import { createSignal, type Component } from 'solid-js';
+import { batch, createSignal, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
-import { generateRandomColors } from './utils';
+
 import { Difficulty, GameState } from './types';
 import { defaultDifficulty, difficultySettings } from './config';
+import {
+  capitalize,
+  generateRandomColors,
+  getBoardSize,
+  getKeys,
+  pickRandomIndex,
+} from './utils';
 
 const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>('playing');
   const [difficulty, setDifficulty] =
     createSignal<Difficulty>(defaultDifficulty);
-  const boardSize = () => difficultySettings[difficulty()].boardSize;
+  const boardSize = () => getBoardSize(difficulty());
   const [colors, setColors] = createSignal(generateRandomColors(boardSize()));
   const [winningColorIndex, setWinningColorIndex] = createSignal(
-    Math.floor(Math.random() * boardSize()),
+    pickRandomIndex(boardSize()),
   );
   const winningColor = () => colors()[winningColorIndex()];
+  const isPlaying = () => gameState() === 'playing';
+  const isWin = () => gameState() === 'win';
 
   const initializeGame = () => {
-    setGameState('playing');
-    setColors(generateRandomColors(boardSize()));
-    setWinningColorIndex(Math.floor(Math.random() * boardSize()));
+    batch(() => {
+      setGameState('playing');
+      setColors(generateRandomColors(boardSize()));
+      setWinningColorIndex(pickRandomIndex(boardSize()));
+    });
   };
 
   const changeDifficulty = (newDifficulty: Difficulty) => {
@@ -33,7 +44,7 @@ const App: Component = () => {
   };
 
   const guessColor = (cardIndex: number) => {
-    if (gameState() !== 'playing') {
+    if (!isPlaying()) {
       return;
     }
 
@@ -48,14 +59,14 @@ const App: Component = () => {
           Click on the color that matches the RGB value below.
         </p>
         <p>Difficulty: {difficulty()}</p>
-        <p class="my-2 bg-gradient-to-t text-center text-3xl">
+        <p class="my-2 bg-gradient-to-t text-center text-3xl font-bold">
           {gameState() === 'playing' ?
-            <p>RGB ({Object.values(winningColor()).join(' ')})</p>
-          : gameState() === 'win' ?
+            <p>RGB ({Object.values(winningColor()).join(', ')})</p>
+          : isWin() ?
             <p>You win!</p>
           : <p>Try again!</p>}
         </p>
-        {gameState() !== 'playing' && (
+        {!isPlaying() && (
           <button
             type="button"
             class="btn btn-secondary self-center"
@@ -66,29 +77,17 @@ const App: Component = () => {
         )}
       </header>
       <Board colors={colors()} onClick={guessColor} />
-      <h2 class="mt-4">Select difficulty</h2>
+      <h2 class="mb-1 mt-4 text-lg">Select difficulty</h2>
       <div class="join">
-        <button
-          type="button"
-          class="btn btn-primary join-item"
-          onClick={() => changeDifficulty('easy')}
-        >
-          Easy
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary join-item"
-          onClick={() => changeDifficulty('medium')}
-        >
-          Medium
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary join-item"
-          onClick={() => changeDifficulty('hard')}
-        >
-          Hard
-        </button>
+        {getKeys(difficultySettings).map((difficulty) => (
+          <button
+            type="button"
+            class="btn btn-primary join-item"
+            onClick={() => changeDifficulty(difficulty)}
+          >
+            {capitalize(difficulty)}
+          </button>
+        ))}
       </div>
     </Layout>
   );
