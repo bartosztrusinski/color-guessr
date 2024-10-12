@@ -2,6 +2,8 @@ import { batch, createSignal, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
+import { LeftSidebar } from './components/LeftSidebar';
+import { RightSidebar } from './components/RightSidebar';
 
 import { Difficulty, GameState } from './types';
 import { defaultDifficulty, difficultySettings } from './config';
@@ -53,13 +55,32 @@ const App: Component = () => {
 
   return (
     <Layout>
-      <header class="mb-5 flex flex-col justify-center gap-1">
-        <h1 class="text-3xl font-bold text-slate-50">ColorGuessr</h1>
-        <p class="text-lg">
-          Click on the color that matches the RGB value below.
-        </p>
-        <p>Difficulty: {difficulty()}</p>
-        <p class="my-2 bg-gradient-to-t text-center text-3xl font-bold">
+      <LeftSidebar>
+        <header class="px-4">
+          <h1 class="text-3xl font-bold text-slate-50">ColorGuessr</h1>
+          <p class="text-pretty text-lg">
+            Click on the color that matches the RGB value below.
+          </p>
+        </header>
+        <p class="mt-2 self-center">Difficulty: {difficulty()}</p>
+        <div class="mt-3 self-center">
+          <h2 class="mb-1 text-lg">Select difficulty</h2>
+          <div class="join">
+            {getKeys(difficultySettings).map((difficulty) => (
+              <button
+                type="button"
+                class="btn btn-primary join-item"
+                onClick={() => changeDifficulty(difficulty)}
+              >
+                {capitalize(difficulty)}
+              </button>
+            ))}
+          </div>
+        </div>
+      </LeftSidebar>
+
+      <main class="p-6 text-center md:px-4">
+        <p class="mb-4 text-3xl font-bold">
           {gameState() === 'playing' ?
             <p>RGB ({Object.values(winningColor()).join(', ')})</p>
           : isWin() ?
@@ -69,26 +90,18 @@ const App: Component = () => {
         {!isPlaying() && (
           <button
             type="button"
-            class="btn btn-secondary self-center"
+            class="btn btn-secondary mb-4"
             onClick={initializeGame}
           >
             Play again
           </button>
         )}
-      </header>
-      <Board colors={colors()} onClick={guessColor} />
-      <h2 class="mb-1 mt-4 text-lg">Select difficulty</h2>
-      <div class="join">
-        {getKeys(difficultySettings).map((difficulty) => (
-          <button
-            type="button"
-            class="btn btn-primary join-item"
-            onClick={() => changeDifficulty(difficulty)}
-          >
-            {capitalize(difficulty)}
-          </button>
-        ))}
-      </div>
+        <Board colors={colors()} onClick={guessColor} />
+      </main>
+
+      <RightSidebar>
+        <span class="text-center text-4xl font-bold">🚧WIP🚧</span>
+      </RightSidebar>
     </Layout>
   );
 };
