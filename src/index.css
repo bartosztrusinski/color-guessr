@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --min-game-width: 60ch;
+    --max-game-width: 90ch;
+
+    --min-sidebar-width: 14rem;
+    --max-sidebar-width: 18rem;
+
+    --game-col: minmax(var(--min-game-width), var(--max-game-width));
+    --sidebar-col: minmax(var(--min-sidebar-width), var(--max-sidebar-width));
+  }
+}
