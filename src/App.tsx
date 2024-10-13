@@ -4,6 +4,7 @@ import { Board } from './components/Board';
 import { Layout } from './components/Layout';
 import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
+import { LogoIcon } from './components/LogoIcon';
 
 import { Difficulty, GameState } from './types';
 import { defaultDifficulty, difficultySettings } from './config';
@@ -57,9 +58,14 @@ const App: Component = () => {
     <Layout>
       <LeftSidebar>
         <header class="px-4">
-          <h1 class="text-3xl font-bold text-slate-50">ColorGuessr</h1>
-          <p class="text-pretty text-lg">
-            Click on the color that matches the RGB value below.
+          <div class="flex items-center justify-center gap-2 py-2">
+            <LogoIcon class="bg-gradient-colorful size-12 -rotate-12 rounded-lg p-2 text-slate-50" />
+            <h1 class="bg-gradient-colorful font-display bg-clip-text text-3xl font-bold text-transparent">
+              ColorGuessr
+            </h1>
+          </div>
+          <p class="text-pretty py-1 text-lg">
+            Try and guess the color based on the RGB values
           </p>
         </header>
         <p class="mt-2 self-center">Difficulty: {difficulty()}</p>
