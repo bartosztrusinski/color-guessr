@@ -1,4 +1,12 @@
-import { batch, createSignal, type Component } from 'solid-js';
+import {
+  batch,
+  createSignal,
+  For,
+  Match,
+  Show,
+  Switch,
+  type Component,
+} from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -83,13 +91,18 @@ const App: Component = () => {
           />
         </MobileDrawer>
         <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
-          {gameState() === 'playing' ?
-            <p>RGB ({Object.values(winningColor()).join(', ')})</p>
-          : isWin() ?
-            <p>You win!</p>
-          : <p>Try again!</p>}
+          <Switch fallback="Try Again!">
+            <Match when={isWin()}>You win!</Match>
+            <Match when={isPlaying()}>
+              RGB (
+              <For each={Object.values(winningColor())}>
+                {(value, index) => `${value}${index() === 2 ? '' : ', '}`}
+              </For>
+              )
+            </Match>
+          </Switch>
         </p>
-        {!isPlaying() && (
+        <Show when={!isPlaying()}>
           <button
             type="button"
             class="btn btn-secondary btn-wide mx-auto mb-4 block text-base"
@@ -97,7 +110,7 @@ const App: Component = () => {
           >
             Play again
           </button>
-        )}
+        </Show>
         <Board colors={colors()} onClick={guessColor} />
       </main>
 
