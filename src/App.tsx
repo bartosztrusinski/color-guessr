@@ -82,7 +82,7 @@ const App: Component = () => {
             onClick={changeDifficulty}
           />
         </MobileDrawer>
-        <p class="pb-4 text-3xl font-bold">
+        <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
           {gameState() === 'playing' ?
             <p>RGB ({Object.values(winningColor()).join(', ')})</p>
           : isWin() ?
@@ -92,7 +92,7 @@ const App: Component = () => {
         {!isPlaying() && (
           <button
             type="button"
-            class="btn btn-secondary btn-wide mb-4"
+            class="btn btn-secondary btn-wide mx-auto mb-4 block text-base"
             onClick={initializeGame}
           >
             Play again
