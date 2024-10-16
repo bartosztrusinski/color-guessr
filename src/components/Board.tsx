@@ -9,7 +9,7 @@ type Props = {
 
 export const Board: Component<Props> = (props) => {
   return (
-    <div class="mx-auto grid max-w-[74vh] grid-cols-3 gap-3 sm:gap-5 md:gap-4 lg:gap-5">
+    <div class="mx-auto grid max-w-[72vh] grid-cols-3 gap-3 sm:gap-5 md:gap-4 lg:gap-5">
       <For each={props.colors}>
         {(color, cardIndex) => (
           <button

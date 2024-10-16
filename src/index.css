@@ -9,7 +9,7 @@
     --min-game-width: 60ch;
     --max-game-width: 90ch;
 
-    --min-sidebar-width: 14rem;
+    --min-sidebar-width: 15rem;
     --max-sidebar-width: 18rem;
 
     --game-col: minmax(var(--min-game-width), var(--max-game-width));

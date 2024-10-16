@@ -6,7 +6,7 @@ export const MobileDrawer: ParentComponent = (props) => {
   return (
     <div class="drawer md:hidden">
       <input id="mobile-drawer" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content flex content-start">
+      <div class="drawer-content mb-3 flex content-start">
         <label
           for="mobile-drawer"
           class="btn btn-primary drawer-button px-3 text-slate-50"
@@ -20,9 +20,9 @@ export const MobileDrawer: ParentComponent = (props) => {
           aria-label="close sidebar"
           class="drawer-overlay"
         ></label>
-        <ul class="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
+        <div class="menu min-h-full w-72 bg-base-200 py-3 text-base-content">
           {props.children}
-        </ul>
+        </div>
       </div>
     </div>
   );
