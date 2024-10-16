@@ -12,8 +12,7 @@ import { Board } from './components/Board';
 import { Layout } from './components/Layout';
 import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
-import { Logo } from './components/Logo';
-import { DifficultySelect } from './components/DifficultySelect';
+import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 
 import { Difficulty, GameState } from './types';
@@ -61,33 +60,17 @@ const App: Component = () => {
   return (
     <Layout>
       <LeftSidebar>
-        <header class="mb-4 mt-3 px-4">
-          <Logo />
-          <div class="chat chat-end my-4 px-6">
-            <div class="chat-bubble chat-bubble-primary text-balance text-center text-slate-50">
-              Try and guess the color based on the RGB values! 🌈
-            </div>
-          </div>
-        </header>
-        <DifficultySelect
+        <Header
           currentDifficulty={difficulty()}
-          onClick={changeDifficulty}
+          handleDifficultyChange={changeDifficulty}
         />
       </LeftSidebar>
 
       <main class="p-4 text-center md:py-8">
         <MobileDrawer>
-          <header class="mb-4 mt-3">
-            <Logo />
-            <div class="chat chat-end my-5 px-4">
-              <div class="chat-bubble chat-bubble-primary text-balance text-center text-slate-50">
-                Try and guess the color based on the RGB values! 🌈
-              </div>
-            </div>
-          </header>
-          <DifficultySelect
+          <Header
             currentDifficulty={difficulty()}
-            onClick={changeDifficulty}
+            handleDifficultyChange={changeDifficulty}
           />
         </MobileDrawer>
         <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
