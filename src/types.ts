@@ -4,6 +4,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type DifficultySettings = {
   boardSize: number;
+  pointsPerWin: number;
 };
 
 export type Rgb = {

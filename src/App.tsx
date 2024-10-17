@@ -17,10 +17,16 @@ import { MobileDrawer } from './components/MobileDrawer';
 
 import { Difficulty, GameState } from './types';
 import { defaultDifficulty } from './config';
-import { generateRandomColors, getBoardSize, pickRandomIndex } from './utils';
+import {
+  generateRandomColors,
+  getBoardSize,
+  getPointsPerWin,
+  pickRandomIndex,
+} from './utils';
 
 const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>('playing');
+  const [score, setScore] = createSignal(0);
   const [difficulty, setDifficulty] =
     createSignal<Difficulty>(defaultDifficulty);
   const boardSize = () => getBoardSize(difficulty());
@@ -54,7 +60,11 @@ const App: Component = () => {
       return;
     }
 
-    setGameState(cardIndex === winningColorIndex() ? 'win' : 'lose');
+    const isWin = cardIndex === winningColorIndex();
+    const pointsPerWin = getPointsPerWin(difficulty());
+
+    setGameState(isWin ? 'win' : 'lose');
+    setScore(isWin ? score() + pointsPerWin : 0);
   };
 
   return (
@@ -97,7 +107,14 @@ const App: Component = () => {
         <Board colors={colors()} onClick={guessColor} />
       </main>
 
-      <RightSidebar></RightSidebar>
+      <RightSidebar>
+        <div class="mx-auto my-3 text-center text-slate-50">
+          <p class="text-lg font-bold">Score</p>
+          <p class="my-3 rounded-lg bg-gradient-colorful p-4 font-display text-5xl">
+            {score()}
+          </p>
+        </div>
+      </RightSidebar>
     </Layout>
   );
 };

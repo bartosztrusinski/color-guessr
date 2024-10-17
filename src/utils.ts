@@ -17,6 +17,10 @@ export function getBoardSize(difficulty: Difficulty): number {
   return difficultySettings[difficulty].boardSize;
 }
 
+export function getPointsPerWin(difficulty: Difficulty): number {
+  return difficultySettings[difficulty].pointsPerWin;
+}
+
 export function pickRandomIndex(size: number): number {
   return Math.floor(Math.random() * size);
 }
