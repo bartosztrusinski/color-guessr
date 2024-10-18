@@ -1,7 +1,7 @@
 import {
   batch,
+  createEffect,
   createSignal,
-  For,
   Match,
   Show,
   Switch,
@@ -24,9 +24,13 @@ import {
   pickRandomIndex,
 } from './utils';
 
+const SCORE_STORAGE_KEY = 'color-guessr-score';
+
 const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>('playing');
-  const [score, setScore] = createSignal(0);
+  const [score, setScore] = createSignal(
+    Number(localStorage.getItem(SCORE_STORAGE_KEY)) || 0,
+  );
   const [difficulty, setDifficulty] =
     createSignal<Difficulty>(defaultDifficulty);
   const boardSize = () => getBoardSize(difficulty());
@@ -67,6 +71,10 @@ const App: Component = () => {
     setScore(isWin ? score() + pointsPerWin : 0);
   };
 
+  createEffect(() => {
+    localStorage.setItem(SCORE_STORAGE_KEY, score().toString());
+  });
+
   return (
     <Layout>
       <LeftSidebar>
@@ -87,11 +95,7 @@ const App: Component = () => {
           <Switch fallback="Try Again!">
             <Match when={isWin()}>You win!</Match>
             <Match when={isPlaying()}>
-              RGB (
-              <For each={Object.values(winningColor())}>
-                {(value, index) => `${value}${index() === 2 ? '' : ', '}`}
-              </For>
-              )
+              RGB ({Object.values(winningColor()).join(', ')})
             </Match>
           </Switch>
         </p>
