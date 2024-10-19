@@ -16,7 +16,11 @@ import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 
 import { Difficulty, GameState } from './types';
-import { defaultDifficulty } from './config';
+import {
+  DEFAULT_DIFFICULTY,
+  DIFFICULTY_STORAGE_KEY,
+  SCORE_STORAGE_KEY,
+} from './config';
 import {
   generateRandomColors,
   getBoardSize,
@@ -24,15 +28,15 @@ import {
   pickRandomIndex,
 } from './utils';
 
-const SCORE_STORAGE_KEY = 'color-guessr-score';
-
 const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>('playing');
-  const [score, setScore] = createSignal(
-    Number(localStorage.getItem(SCORE_STORAGE_KEY)) || 0,
+  const [difficulty, setDifficulty] = createSignal<Difficulty>(
+    (localStorage.getItem(DIFFICULTY_STORAGE_KEY) as Difficulty) ??
+      DEFAULT_DIFFICULTY,
   );
-  const [difficulty, setDifficulty] =
-    createSignal<Difficulty>(defaultDifficulty);
+  const [score, setScore] = createSignal(
+    Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0,
+  );
   const boardSize = () => getBoardSize(difficulty());
   const [colors, setColors] = createSignal(generateRandomColors(boardSize()));
   const [winningColorIndex, setWinningColorIndex] = createSignal(
@@ -73,6 +77,10 @@ const App: Component = () => {
 
   createEffect(() => {
     localStorage.setItem(SCORE_STORAGE_KEY, score().toString());
+  });
+
+  createEffect(() => {
+    localStorage.setItem(DIFFICULTY_STORAGE_KEY, difficulty());
   });
 
   return (
