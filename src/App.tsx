@@ -20,6 +20,7 @@ import {
   DEFAULT_DIFFICULTY,
   DIFFICULTY_STORAGE_KEY,
   SCORE_STORAGE_KEY,
+  TOP_SCORE_STORAGE_KEY,
 } from './config';
 import {
   generateRandomColors,
@@ -37,6 +38,8 @@ const App: Component = () => {
   const [score, setScore] = createSignal(
     Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0,
   );
+  const topScore = () =>
+    Math.max(score(), Number(localStorage.getItem(TOP_SCORE_STORAGE_KEY)) ?? 0);
   const boardSize = () => getBoardSize(difficulty());
   const [colors, setColors] = createSignal(generateRandomColors(boardSize()));
   const [winningColorIndex, setWinningColorIndex] = createSignal(
@@ -80,6 +83,10 @@ const App: Component = () => {
   });
 
   createEffect(() => {
+    localStorage.setItem(TOP_SCORE_STORAGE_KEY, topScore().toString());
+  });
+
+  createEffect(() => {
     localStorage.setItem(DIFFICULTY_STORAGE_KEY, difficulty());
   });
 
@@ -120,12 +127,18 @@ const App: Component = () => {
       </main>
 
       <RightSidebar>
-        <div class="mx-auto my-3 text-center text-slate-50">
-          <p class="text-lg font-bold">Score</p>
-          <p class="my-3 rounded-lg bg-gradient-colorful p-4 font-display text-5xl">
+        <section class="mt-3 flex flex-col items-center gap-1 text-slate-50">
+          <div class="text-lg font-bold">Score</div>
+          <div class="rounded-lg bg-gradient-colorful p-4 font-display text-5xl">
             {score()}
-          </p>
-        </div>
+          </div>
+        </section>
+        <section class="mt-5 flex flex-col items-center gap-1 text-slate-50">
+          <div class="font-bold">Top Score</div>
+          <div class="rounded-lg bg-gradient-colorful p-3 font-display text-4xl">
+            {topScore()}
+          </div>
+        </section>
       </RightSidebar>
     </Layout>
   );
