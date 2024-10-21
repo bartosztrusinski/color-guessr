@@ -22,49 +22,46 @@ const App: Component = () => {
     (localStorage.getItem(DIFFICULTY_STORAGE_KEY) as Difficulty) ?? DEFAULT_DIFFICULTY,
   );
   const [score, setScore] = createSignal(Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0);
-  /* 
-  TODO: Generate colors for all difficulties and store them in local storage 
-  so that they don't change on difficulty change and reload - no cheating :-)
-  */
-  const [colors, setColors] = createSignal<Record<Difficulty, Rgb[]>>({
+  // TODO: Store round data in local storage
+  const [roundColors, setRoundColors] = createSignal<Record<Difficulty, Rgb[]>>({
     easy: generateRandomColors(getBoardSize('easy')),
     medium: generateRandomColors(getBoardSize('medium')),
     hard: generateRandomColors(getBoardSize('hard')),
   });
-  const boardSize = () => getBoardSize(difficulty());
-  const [winningColorIndex, setWinningColorIndex] = createSignal(pickRandomIndex(boardSize()));
+  const [winningColorIndices, setWinningColorIndices] = createSignal<Record<Difficulty, number>>({
+    easy: pickRandomIndex(getBoardSize('easy')),
+    medium: pickRandomIndex(getBoardSize('medium')),
+    hard: pickRandomIndex(getBoardSize('hard')),
+  });
   const topScore = () => Math.max(score(), Number(localStorage.getItem(TOP_SCORE_STORAGE_KEY)));
-  const colorsOnBoard = () => colors()[difficulty()];
-  const winningColor = () => colorsOnBoard()[winningColorIndex()] ?? [0, 0, 0];
+  const colorsOnBoard = () => roundColors()[difficulty()];
+  const winningColorIndex = () => winningColorIndices()[difficulty()];
+  const winningColor = () => colorsOnBoard()[winningColorIndex()];
   const isPlaying = () => gameState() === 'playing';
   const isWin = () => gameState() === 'win';
 
   const initializeGame = () => {
     batch(() => {
       setGameState('playing');
-      setColors({
+      setRoundColors({
         easy: generateRandomColors(getBoardSize('easy')),
         medium: generateRandomColors(getBoardSize('medium')),
         hard: generateRandomColors(getBoardSize('hard')),
       });
+      setWinningColorIndices({
+        easy: pickRandomIndex(getBoardSize('easy')),
+        medium: pickRandomIndex(getBoardSize('medium')),
+        hard: pickRandomIndex(getBoardSize('hard')),
+      });
     });
   };
 
-  const changeDifficulty = (newDifficulty: Difficulty) => {
-    if (newDifficulty === difficulty()) {
-      return;
-    }
-
-    setDifficulty(newDifficulty);
-    setWinningColorIndex(pickRandomIndex(getBoardSize(newDifficulty)));
-  };
-
-  const guessColor = (cardIndex: number) => {
+  const guessColor = (chosenColorIndex: number) => {
     if (!isPlaying()) {
       return;
     }
 
-    const isWin = cardIndex === winningColorIndex();
+    const isWin = chosenColorIndex === winningColorIndex();
     const pointsPerWin = getPointsPerWin(difficulty());
 
     setGameState(isWin ? 'win' : 'lose');
@@ -86,12 +83,12 @@ const App: Component = () => {
   return (
     <Layout>
       <LeftSidebar>
-        <Header currentDifficulty={difficulty()} handleDifficultyChange={changeDifficulty} />
+        <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
       </LeftSidebar>
 
       <main class="p-4 text-center md:py-8">
         <MobileDrawer>
-          <Header currentDifficulty={difficulty()} handleDifficultyChange={changeDifficulty} />
+          <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
         </MobileDrawer>
         <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
           <Switch fallback="Try Again!">
