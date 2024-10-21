@@ -25,9 +25,7 @@ export function pickRandomIndex(size: number): number {
   return Math.floor(Math.random() * size);
 }
 
-export const getKeys = Object.keys as <T extends object>(
-  obj: T,
-) => Array<keyof T>;
+export const getKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>;
 
 export function capitalize(str: string): string {
   return str[0].toUpperCase() + str.substring(1);
