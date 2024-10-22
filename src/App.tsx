@@ -17,13 +17,14 @@ import {
 } from './config';
 
 const App: Component = () => {
-  const [gameState, setGameState] = createSignal<GameState>('playing');
+  const [gameState, setGameState] = createSignal<GameState>(GameState.Playing);
   // TODO: Store round data in local storage
   const [roundData, setRoundData] = createSignal(generateRoundData());
-  const [difficulty, setDifficulty] = createSignal<Difficulty>(
+  const [difficulty, setDifficulty] = createSignal(
     (localStorage.getItem(DIFFICULTY_STORAGE_KEY) as Difficulty) ?? DEFAULT_DIFFICULTY,
   );
   const [score, setScore] = createSignal(Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0);
+
   const topScore = () => Math.max(score(), Number(localStorage.getItem(TOP_SCORE_STORAGE_KEY)));
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
@@ -33,7 +34,7 @@ const App: Component = () => {
 
   const initializeGame = () => {
     batch(() => {
-      setGameState('playing');
+      setGameState(GameState.Playing);
       setRoundData(generateRoundData());
     });
   };
@@ -46,7 +47,7 @@ const App: Component = () => {
     const isWin = chosenColorIndex === winningColorIndex();
     const pointsPerWin = getPointsPerWin(difficulty());
 
-    setGameState(isWin ? 'win' : 'lose');
+    setGameState(isWin ? GameState.Win : GameState.Lose);
     setScore(isWin ? score() + pointsPerWin : 0);
   };
 

@@ -1,4 +1,8 @@
-export type GameState = 'playing' | 'win' | 'lose';
+export enum GameState {
+  Playing = 'playing',
+  Win = 'win',
+  Lose = 'lose',
+}
 
 export type BoardData = {
   colors: Rgb[];
