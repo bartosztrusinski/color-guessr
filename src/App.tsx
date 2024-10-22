@@ -66,12 +66,12 @@ const App: Component = () => {
   return (
     <Layout>
       <LeftSidebar>
-        <Header currentDifficulty={difficulty()} selectDifficulty={setDifficulty} />
+        <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
       </LeftSidebar>
 
       <main class="p-4 text-center md:py-8">
         <MobileDrawer>
-          <Header currentDifficulty={difficulty()} selectDifficulty={setDifficulty} />
+          <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
         </MobileDrawer>
         <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
           <Switch fallback="Try Again!">

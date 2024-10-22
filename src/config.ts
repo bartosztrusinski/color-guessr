@@ -1,6 +1,6 @@
 import { Difficulty, DifficultySettings } from './types';
 
-export const DEFAULT_DIFFICULTY: Difficulty = 'medium';
+export const DEFAULT_DIFFICULTY: Difficulty = Difficulty.Medium;
 
 const STORAGE_KEY_PREFIX = 'color-guessr-';
 export const SCORE_STORAGE_KEY = STORAGE_KEY_PREFIX + 'score';

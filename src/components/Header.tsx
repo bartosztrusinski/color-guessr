@@ -6,7 +6,7 @@ import { Difficulty } from '../types';
 
 type Props = {
   currentDifficulty: Difficulty;
-  handleDifficultyChange: (difficulty: Difficulty) => void;
+  changeDifficulty: (newDifficulty: Difficulty) => void;
 };
 
 export const Header: Component<Props> = (props) => {
@@ -22,7 +22,7 @@ export const Header: Component<Props> = (props) => {
       </header>
       <DifficultySelect
         currentDifficulty={props.currentDifficulty}
-        onClick={props.handleDifficultyChange}
+        onClick={props.changeDifficulty}
       />
     </>
   );
