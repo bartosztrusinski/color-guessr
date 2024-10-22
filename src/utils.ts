@@ -1,5 +1,5 @@
 import { difficultySettings } from './config';
-import { Difficulty, Rgb } from './types';
+import { BoardData, Difficulty, Rgb } from './types';
 
 function generateRandomRgb(): Rgb {
   return {
@@ -29,4 +29,22 @@ export const getKeys = Object.keys as <T extends object>(obj: T) => Array<keyof 
 
 export function capitalize(str: string): string {
   return str[0].toUpperCase() + str.substring(1);
+}
+
+export function generateBoardDataForDifficulty(difficulty: Difficulty): BoardData {
+  const boardSize = getBoardSize(difficulty);
+
+  return {
+    colors: generateRandomColors(boardSize),
+    winningColorIndex: pickRandomIndex(boardSize),
+  };
+}
+
+export function generateRoundData(): Record<Difficulty, BoardData> {
+  return Object.values(Difficulty).reduce(
+    (roundData, difficultyLevel) => {
+      return { ...roundData, [difficultyLevel]: generateBoardDataForDifficulty(difficultyLevel) };
+    },
+    {} as Record<Difficulty, BoardData>,
+  );
 }
