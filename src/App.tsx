@@ -7,8 +7,8 @@ import { RightSidebar } from './components/RightSidebar';
 import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 
-import { Difficulty, GameState, Rgb } from './types';
-import { generateRandomColors, getBoardSize, getPointsPerWin, pickRandomIndex } from './utils';
+import { Difficulty, GameState } from './types';
+import { generateRoundData, getPointsPerWin } from './utils';
 import {
   DEFAULT_DIFFICULTY,
   DIFFICULTY_STORAGE_KEY,
@@ -18,24 +18,15 @@ import {
 
 const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>('playing');
+  // TODO: Store round data in local storage
+  const [roundData, setRoundData] = createSignal(generateRoundData());
   const [difficulty, setDifficulty] = createSignal<Difficulty>(
     (localStorage.getItem(DIFFICULTY_STORAGE_KEY) as Difficulty) ?? DEFAULT_DIFFICULTY,
   );
   const [score, setScore] = createSignal(Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0);
-  // TODO: Store round data in local storage
-  const [roundColors, setRoundColors] = createSignal<Record<Difficulty, Rgb[]>>({
-    easy: generateRandomColors(getBoardSize('easy')),
-    medium: generateRandomColors(getBoardSize('medium')),
-    hard: generateRandomColors(getBoardSize('hard')),
-  });
-  const [winningColorIndices, setWinningColorIndices] = createSignal<Record<Difficulty, number>>({
-    easy: pickRandomIndex(getBoardSize('easy')),
-    medium: pickRandomIndex(getBoardSize('medium')),
-    hard: pickRandomIndex(getBoardSize('hard')),
-  });
   const topScore = () => Math.max(score(), Number(localStorage.getItem(TOP_SCORE_STORAGE_KEY)));
-  const colorsOnBoard = () => roundColors()[difficulty()];
-  const winningColorIndex = () => winningColorIndices()[difficulty()];
+  const colorsOnBoard = () => roundData()[difficulty()].colors;
+  const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
   const winningColor = () => colorsOnBoard()[winningColorIndex()];
   const isPlaying = () => gameState() === 'playing';
   const isWin = () => gameState() === 'win';
@@ -43,16 +34,7 @@ const App: Component = () => {
   const initializeGame = () => {
     batch(() => {
       setGameState('playing');
-      setRoundColors({
-        easy: generateRandomColors(getBoardSize('easy')),
-        medium: generateRandomColors(getBoardSize('medium')),
-        hard: generateRandomColors(getBoardSize('hard')),
-      });
-      setWinningColorIndices({
-        easy: pickRandomIndex(getBoardSize('easy')),
-        medium: pickRandomIndex(getBoardSize('medium')),
-        hard: pickRandomIndex(getBoardSize('hard')),
-      });
+      setRoundData(generateRoundData());
     });
   };
 
@@ -83,12 +65,12 @@ const App: Component = () => {
   return (
     <Layout>
       <LeftSidebar>
-        <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
+        <Header currentDifficulty={difficulty()} selectDifficulty={setDifficulty} />
       </LeftSidebar>
 
       <main class="p-4 text-center md:py-8">
         <MobileDrawer>
-          <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
+          <Header currentDifficulty={difficulty()} selectDifficulty={setDifficulty} />
         </MobileDrawer>
         <p class="inline-block bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
           <Switch fallback="Try Again!">
