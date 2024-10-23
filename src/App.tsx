@@ -19,14 +19,13 @@ import {
 
 export const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>(GameState.Playing);
-  // TODO: Store round data in local storage
-  const [roundData, setRoundData] = createSignal(generateRoundData());
+  const [roundData, setRoundData] = createPersistentSignal('round-data', generateRoundData());
+  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
+  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
   const [difficulty, setDifficulty] = createPersistentSignal(
     DIFFICULTY_STORAGE_KEY,
     DEFAULT_DIFFICULTY,
   );
-  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
-  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
 
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
