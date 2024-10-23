@@ -7,7 +7,8 @@ import { RightSidebar } from './components/RightSidebar';
 import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 
-import { Difficulty, GameState } from './types';
+import { createPersistentSignal } from './createPersistentSignal';
+import { GameState } from './types';
 import { generateRoundData, getPointsPerWin } from './utils';
 import {
   DEFAULT_DIFFICULTY,
@@ -16,16 +17,17 @@ import {
   TOP_SCORE_STORAGE_KEY,
 } from './config';
 
-const App: Component = () => {
+export const App: Component = () => {
   const [gameState, setGameState] = createSignal<GameState>(GameState.Playing);
   // TODO: Store round data in local storage
   const [roundData, setRoundData] = createSignal(generateRoundData());
-  const [difficulty, setDifficulty] = createSignal(
-    (localStorage.getItem(DIFFICULTY_STORAGE_KEY) as Difficulty) ?? DEFAULT_DIFFICULTY,
+  const [difficulty, setDifficulty] = createPersistentSignal(
+    DIFFICULTY_STORAGE_KEY,
+    DEFAULT_DIFFICULTY,
   );
-  const [score, setScore] = createSignal(Number(localStorage.getItem(SCORE_STORAGE_KEY)) ?? 0);
+  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
+  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
 
-  const topScore = () => Math.max(score(), Number(localStorage.getItem(TOP_SCORE_STORAGE_KEY)));
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
   const winningColor = () => colorsOnBoard()[winningColorIndex()];
@@ -46,22 +48,12 @@ const App: Component = () => {
 
     const isWin = chosenColorIndex === winningColorIndex();
     const pointsPerWin = getPointsPerWin(difficulty());
+    const newScore = isWin ? score() + pointsPerWin : 0;
 
     setGameState(isWin ? GameState.Win : GameState.Lose);
-    setScore(isWin ? score() + pointsPerWin : 0);
+    setScore(newScore);
+    setTopScore(Math.max(newScore, topScore()));
   };
-
-  createEffect(() => {
-    localStorage.setItem(SCORE_STORAGE_KEY, score().toString());
-  });
-
-  createEffect(() => {
-    localStorage.setItem(TOP_SCORE_STORAGE_KEY, topScore().toString());
-  });
-
-  createEffect(() => {
-    localStorage.setItem(DIFFICULTY_STORAGE_KEY, difficulty());
-  });
 
   return (
     <Layout>
@@ -104,5 +96,3 @@ const App: Component = () => {
     </Layout>
   );
 };
-
-export default App;
