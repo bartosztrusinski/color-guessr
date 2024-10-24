@@ -13,19 +13,27 @@ import { generateRoundData, getPointsPerWin } from './utils';
 import {
   DEFAULT_DIFFICULTY,
   DIFFICULTY_STORAGE_KEY,
+  GAME_STATE_STORAGE_KEY,
+  ROUND_DATA_STORAGE_KEY,
   SCORE_STORAGE_KEY,
   TOP_SCORE_STORAGE_KEY,
 } from './config';
 
 export const App: Component = () => {
-  const [gameState, setGameState] = createSignal<GameState>(GameState.Playing);
-  const [roundData, setRoundData] = createPersistentSignal('round-data', generateRoundData());
-  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
-  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
+  const [gameState, setGameState] = createPersistentSignal<GameState>(
+    GAME_STATE_STORAGE_KEY,
+    GameState.Playing,
+  );
+  const [roundData, setRoundData] = createPersistentSignal(
+    ROUND_DATA_STORAGE_KEY,
+    generateRoundData(),
+  );
   const [difficulty, setDifficulty] = createPersistentSignal(
     DIFFICULTY_STORAGE_KEY,
     DEFAULT_DIFFICULTY,
   );
+  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
+  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
 
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
@@ -34,10 +42,8 @@ export const App: Component = () => {
   const isWin = () => gameState() === 'win';
 
   const initializeGame = () => {
-    batch(() => {
-      setGameState(GameState.Playing);
-      setRoundData(generateRoundData());
-    });
+    setGameState(GameState.Playing);
+    setRoundData(generateRoundData());
   };
 
   const guessColor = (chosenColorIndex: number) => {
@@ -79,7 +85,12 @@ export const App: Component = () => {
             Play again
           </button>
         </Show>
-        <Board colors={colorsOnBoard()} onClick={guessColor} />
+        <Board
+          colors={colorsOnBoard()}
+          onClick={guessColor}
+          isPlaying={isPlaying()}
+          winningColor={winningColor()}
+        />
       </main>
 
       <RightSidebar>

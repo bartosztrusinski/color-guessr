@@ -6,6 +6,8 @@ const STORAGE_KEY_PREFIX = 'color-guessr-';
 export const SCORE_STORAGE_KEY = STORAGE_KEY_PREFIX + 'score';
 export const TOP_SCORE_STORAGE_KEY = STORAGE_KEY_PREFIX + 'top-score';
 export const DIFFICULTY_STORAGE_KEY = STORAGE_KEY_PREFIX + 'difficulty';
+export const ROUND_DATA_STORAGE_KEY = STORAGE_KEY_PREFIX + 'round-data';
+export const GAME_STATE_STORAGE_KEY = STORAGE_KEY_PREFIX + 'game-state';
 
 export const difficultySettings: Record<Difficulty, DifficultySettings> = {
   easy: { boardSize: 3, pointsPerWin: 1 },
