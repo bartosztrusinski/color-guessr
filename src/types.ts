@@ -15,6 +15,8 @@ export enum Difficulty {
   Hard = 'hard',
 }
 
+export type RoundData = Record<Difficulty, BoardData>;
+
 export type DifficultySettings = {
   boardSize: number;
   pointsPerWin: number;

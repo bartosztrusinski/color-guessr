@@ -1,5 +1,5 @@
 import { difficultySettings } from './config';
-import { BoardData, Difficulty, Rgb } from './types';
+import { BoardData, Difficulty, Rgb, RoundData } from './types';
 
 function generateRandomRgb(): Rgb {
   return {
@@ -31,6 +31,12 @@ export function capitalize(str: string): string {
   return str[0].toUpperCase() + str.substring(1);
 }
 
+export function generateRoundData(): RoundData {
+  return Object.values(Difficulty).reduce((roundData, difficultyLevel) => {
+    return { ...roundData, [difficultyLevel]: generateBoardDataForDifficulty(difficultyLevel) };
+  }, {} as RoundData);
+}
+
 export function generateBoardDataForDifficulty(difficulty: Difficulty): BoardData {
   const boardSize = getBoardSize(difficulty);
 
@@ -40,11 +46,16 @@ export function generateBoardDataForDifficulty(difficulty: Difficulty): BoardDat
   };
 }
 
-export function generateRoundData(): Record<Difficulty, BoardData> {
-  return Object.values(Difficulty).reduce(
-    (roundData, difficultyLevel) => {
-      return { ...roundData, [difficultyLevel]: generateBoardDataForDifficulty(difficultyLevel) };
-    },
-    {} as Record<Difficulty, BoardData>,
-  );
+export function setRoundBoardsToWinningColor(roundData: RoundData, winningColor: Rgb): RoundData {
+  return Object.values(Difficulty).reduce((newRoundData, difficultyLevel) => {
+    const boardData = roundData[difficultyLevel];
+
+    return {
+      ...newRoundData,
+      [difficultyLevel]: {
+        ...boardData,
+        colors: boardData.colors.map(() => winningColor),
+      },
+    };
+  }, {} as RoundData);
 }
