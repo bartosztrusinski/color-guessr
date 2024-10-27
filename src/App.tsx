@@ -1,4 +1,4 @@
-import { Show, type Component } from 'solid-js';
+import { createSignal, Show, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -35,6 +35,7 @@ export const App: Component = () => {
   );
   const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
   const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
+  const [isModalOpen, setIsModalOpen] = createSignal(false);
 
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
@@ -45,6 +46,7 @@ export const App: Component = () => {
   const initializeGame = () => {
     setGameState(GameState.Playing);
     setRoundData(generateRoundData());
+    setIsModalOpen(false);
   };
 
   const guessColor = (chosenColorIndex: number) => {
@@ -55,13 +57,13 @@ export const App: Component = () => {
     const isWin = chosenColorIndex === winningColorIndex();
     const pointsPerWin = getPointsPerWin(difficulty());
     const newScore = isWin ? score() + pointsPerWin : 0;
+    const newRoundData = setRoundBoardsToWinningColor(roundData(), winningColor());
 
     setGameState(isWin ? GameState.Win : GameState.Lose);
+    setRoundData(newRoundData);
     setScore(newScore);
     setTopScore(Math.max(newScore, topScore()));
-
-    const newRoundData = setRoundBoardsToWinningColor(roundData(), winningColor());
-    setRoundData(newRoundData);
+    setIsModalOpen(true);
   };
 
   return (
@@ -87,6 +89,31 @@ export const App: Component = () => {
           RGB ({Object.values(winningColor()).join(', ')})
         </p>
         <Board colors={colorsOnBoard()} onClick={guessColor} />
+
+        <dialog class="modal" classList={{ 'modal-open': isModalOpen() }}>
+          <div class="modal-box">
+            <button
+              type="button"
+              class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+              onClick={[setIsModalOpen, false]}
+            >
+              ✕
+            </button>
+            <p class="bg-gradient-colorful bg-clip-text pb-5 font-display text-4xl font-bold text-transparent">
+              {isWin() ? 'You Win' : 'You Lose'}
+            </p>
+            <p class="pb-10 text-lg text-slate-50">
+              {isWin() ? 'Good job! You guessed the right color' : 'Better luck next time!'}
+            </p>
+            <button
+              type="button"
+              class="btn btn-accent btn-block text-lg text-slate-50"
+              onClick={initializeGame}
+            >
+              {isWin() ? 'Next Round' : 'Try Again'}
+            </button>
+          </div>
+        </dialog>
       </main>
 
       <RightSidebar>
