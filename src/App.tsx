@@ -1,4 +1,4 @@
-import { createSignal, Show, type Component } from 'solid-js';
+import { createSignal, Match, Show, Switch, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -36,6 +36,7 @@ export const App: Component = () => {
   const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
   const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
   const [isModalOpen, setIsModalOpen] = createSignal(false);
+  const [isNewTopScore, setIsNewTopScore] = createSignal(false);
 
   const colorsOnBoard = () => roundData()[difficulty()].colors;
   const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
@@ -47,6 +48,7 @@ export const App: Component = () => {
     setGameState(GameState.Playing);
     setRoundData(generateRoundData());
     setIsModalOpen(false);
+    setIsNewTopScore(false);
   };
 
   const guessColor = (chosenColorIndex: number) => {
@@ -57,10 +59,11 @@ export const App: Component = () => {
     const isWin = chosenColorIndex === winningColorIndex();
     const pointsPerWin = getPointsPerWin(difficulty());
     const newScore = isWin ? score() + pointsPerWin : 0;
-    const newRoundData = setRoundBoardsToWinningColor(roundData(), winningColor());
+    const newRoundData = setRoundBoardsToWinningColor(roundData());
 
     setGameState(isWin ? GameState.Win : GameState.Lose);
     setRoundData(newRoundData);
+    setIsNewTopScore(newScore > topScore());
     setScore(newScore);
     setTopScore(Math.max(newScore, topScore()));
     setIsModalOpen(true);
@@ -100,17 +103,24 @@ export const App: Component = () => {
               ✕
             </button>
             <p class="bg-gradient-colorful bg-clip-text pb-5 font-display text-4xl font-bold text-transparent">
-              {isWin() ? 'You Win' : 'You Lose'}
+              <Show when={isWin()} fallback="You Lose">
+                You Win
+              </Show>
             </p>
             <p class="pb-10 text-lg text-slate-50">
-              {isWin() ? 'Good job! You guessed the right color' : 'Better luck next time!'}
+              <Switch fallback="Better luck next time!">
+                <Match when={isNewTopScore()}>Wow! You just beat the top score!</Match>
+                <Match when={isWin()}>Good job! You guessed the right color</Match>
+              </Switch>
             </p>
             <button
               type="button"
               class="btn btn-accent btn-block text-lg text-slate-50"
               onClick={initializeGame}
             >
-              {isWin() ? 'Next Round' : 'Try Again'}
+              <Show when={isWin()} fallback="Try Again">
+                Next Round
+              </Show>
             </button>
           </div>
         </dialog>

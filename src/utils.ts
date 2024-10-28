@@ -46,9 +46,10 @@ export function generateBoardDataForDifficulty(difficulty: Difficulty): BoardDat
   };
 }
 
-export function setRoundBoardsToWinningColor(roundData: RoundData, winningColor: Rgb): RoundData {
+export function setRoundBoardsToWinningColor(roundData: RoundData): RoundData {
   return Object.values(Difficulty).reduce((newRoundData, difficultyLevel) => {
     const boardData = roundData[difficultyLevel];
+    const winningColor = boardData.colors[boardData.winningColorIndex];
 
     return {
       ...newRoundData,
