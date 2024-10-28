@@ -1,4 +1,4 @@
-import { createSignal, Match, Show, Switch, type Component } from 'solid-js';
+import { createSignal, Match, onMount, Show, Switch, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -68,6 +68,12 @@ export const App: Component = () => {
     setTopScore(Math.max(newScore, topScore()));
     setIsModalOpen(true);
   };
+
+  onMount(() => {
+    if (!isPlaying()) {
+      initializeGame();
+    }
+  });
 
   return (
     <Layout>
