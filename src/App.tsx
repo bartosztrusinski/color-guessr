@@ -9,6 +9,7 @@ import { MobileDrawer } from './components/MobileDrawer';
 import { ReloadIcon } from './components/ReloadIcon';
 
 import { createPersistentSignal } from './createPersistentSignal';
+import { onPressEscape } from './onPressEscape';
 import { GameState } from './types';
 import { generateRoundData, getPointsPerWin, setRoundBoardsToWinningColor } from './utils';
 import {
@@ -75,6 +76,8 @@ export const App: Component = () => {
     }
   });
 
+  onPressEscape(() => setIsModalOpen(false));
+
   return (
     <Layout>
       <LeftSidebar>
@@ -94,20 +97,13 @@ export const App: Component = () => {
         <MobileDrawer>
           <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
         </MobileDrawer>
-        <p class="bg-gradient-colorful bg-clip-text pb-4 font-display text-4xl font-bold text-transparent">
+        <h3 class="mb-4 inline-block bg-gradient-colorful bg-clip-text font-display text-4xl font-bold text-transparent">
           RGB ({Object.values(winningColor()).join(', ')})
-        </p>
+        </h3>
         <Board colors={colorsOnBoard()} onClick={guessColor} />
 
         <dialog class="modal" classList={{ 'modal-open': isModalOpen() }}>
           <div class="modal-box">
-            <button
-              type="button"
-              class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-              onClick={[setIsModalOpen, false]}
-            >
-              ✕
-            </button>
             <p class="bg-gradient-colorful bg-clip-text pb-5 font-display text-4xl font-bold text-transparent">
               <Show when={isWin()} fallback="You Lose">
                 You Win
@@ -129,6 +125,9 @@ export const App: Component = () => {
               </Show>
             </button>
           </div>
+          <form method="dialog" onSubmit={[setIsModalOpen, false]} class="modal-backdrop">
+            <button>close</button>
+          </form>
         </dialog>
       </main>
 
