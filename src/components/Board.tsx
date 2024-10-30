@@ -1,6 +1,6 @@
 import { Component, For } from 'solid-js';
 
-import { Rgb } from '../types';
+import { Rgb } from '../lib/types';
 
 type Props = {
   colors: Rgb[];

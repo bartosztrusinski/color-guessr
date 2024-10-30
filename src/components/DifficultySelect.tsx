@@ -1,8 +1,8 @@
 import { Component, Index } from 'solid-js';
 
-import { difficultySettings } from '../config';
+import { difficultySettings } from '../lib/config';
 import { capitalize, getKeys } from '../utils';
-import { Difficulty } from '../types';
+import { Difficulty } from '../lib/types';
 
 type Props = {
   currentDifficulty: Difficulty;

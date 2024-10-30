@@ -1,5 +1,5 @@
-import { difficultySettings } from './config';
-import { BoardData, Difficulty, Rgb, RoundData } from './types';
+import { difficultySettings } from './lib/config';
+import { BoardData, Difficulty, Rgb, RoundData } from './lib/types';
 
 function generateRandomRgb(): Rgb {
   return {

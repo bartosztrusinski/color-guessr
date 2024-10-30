@@ -2,7 +2,7 @@ import { Component } from 'solid-js';
 
 import { Logo } from './Logo';
 import { DifficultySelect } from './DifficultySelect';
-import { Difficulty } from '../types';
+import { Difficulty } from '../lib/types';
 
 type Props = {
   currentDifficulty: Difficulty;

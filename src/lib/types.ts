@@ -27,3 +27,9 @@ export type Rgb = {
   g: number;
   b: number;
 };
+
+export type ConfigKey<T extends string> = Uppercase<Replace<T, '-', '_'>>;
+
+type Replace<Str extends string, ToReplace extends string, Replacement extends string> =
+  Str extends `${infer Prefix}${ToReplace}${infer Suffix}` ? `${Prefix}${Replacement}${Suffix}`
+  : Str;

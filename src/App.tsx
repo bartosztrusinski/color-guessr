@@ -8,34 +8,27 @@ import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 import { ReloadIcon } from './components/ReloadIcon';
 
-import { createPersistentSignal } from './createPersistentSignal';
-import { onPressEscape } from './onPressEscape';
-import { GameState } from './types';
+import { createPersistentSignal } from './lib/createPersistentSignal';
+import { onPressEscape } from './lib/onPressEscape';
+import { GameState } from './lib/types';
 import { generateRoundData, getPointsPerWin, setRoundBoardsToWinningColor } from './utils';
-import {
-  DEFAULT_DIFFICULTY,
-  DIFFICULTY_STORAGE_KEY,
-  GAME_STATE_STORAGE_KEY,
-  ROUND_DATA_STORAGE_KEY,
-  SCORE_STORAGE_KEY,
-  TOP_SCORE_STORAGE_KEY,
-} from './config';
+import { DEFAULT_DIFFICULTY, storageKeyConstants } from './lib/config';
 
 export const App: Component = () => {
   const [gameState, setGameState] = createPersistentSignal<GameState>(
-    GAME_STATE_STORAGE_KEY,
+    storageKeyConstants.GAME_STATE,
     GameState.Playing,
   );
   const [roundData, setRoundData] = createPersistentSignal(
-    ROUND_DATA_STORAGE_KEY,
+    storageKeyConstants.ROUND_DATA,
     generateRoundData(),
   );
   const [difficulty, setDifficulty] = createPersistentSignal(
-    DIFFICULTY_STORAGE_KEY,
+    storageKeyConstants.DIFFICULTY,
     DEFAULT_DIFFICULTY,
   );
-  const [score, setScore] = createPersistentSignal(SCORE_STORAGE_KEY, 0);
-  const [topScore, setTopScore] = createPersistentSignal(TOP_SCORE_STORAGE_KEY, 0);
+  const [score, setScore] = createPersistentSignal(storageKeyConstants.SCORE, 0);
+  const [topScore, setTopScore] = createPersistentSignal(storageKeyConstants.TOP_SCORE, 0);
   const [isModalOpen, setIsModalOpen] = createSignal(false);
   const [isNewTopScore, setIsNewTopScore] = createSignal(false);
 
