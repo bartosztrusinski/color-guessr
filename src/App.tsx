@@ -1,4 +1,4 @@
-import { createSignal, Match, onMount, Show, Switch, type Component } from 'solid-js';
+import { createSignal, onMount, Show, type Component } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -7,9 +7,9 @@ import { RightSidebar } from './components/RightSidebar';
 import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 import { ReloadIcon } from './components/ReloadIcon';
+import { RoundResultsModal } from './components/RoundResultsModal';
 
 import { createPersistentSignal } from './lib/createPersistentSignal';
-import { onPressEscape } from './lib/onPressEscape';
 import { GameState } from './lib/types';
 import { generateRoundData, getPointsPerWin, setRoundBoardsToWinningColor } from './utils';
 import { DEFAULT_DIFFICULTY, storageKeyConstants } from './lib/config';
@@ -38,10 +38,12 @@ export const App: Component = () => {
   const isPlaying = () => gameState() === 'playing';
   const isWin = () => gameState() === 'win';
 
+  const closeModal = () => setIsModalOpen(false);
+
   const initializeGame = () => {
     setGameState(GameState.Playing);
     setRoundData(generateRoundData());
-    setIsModalOpen(false);
+    closeModal();
     setIsNewTopScore(false);
   };
 
@@ -69,8 +71,6 @@ export const App: Component = () => {
     }
   });
 
-  onPressEscape(() => setIsModalOpen(false));
-
   return (
     <Layout>
       <LeftSidebar>
@@ -94,34 +94,6 @@ export const App: Component = () => {
           RGB ({Object.values(winningColor()).join(', ')})
         </h3>
         <Board colors={colorsOnBoard()} onClick={guessColor} />
-
-        <dialog class="modal" classList={{ 'modal-open': isModalOpen() }}>
-          <div class="modal-box">
-            <p class="bg-gradient-colorful bg-clip-text pb-5 font-display text-4xl font-bold text-transparent">
-              <Show when={isWin()} fallback="You Lose">
-                You Win
-              </Show>
-            </p>
-            <p class="pb-10 text-lg text-slate-50">
-              <Switch fallback="Better luck next time!">
-                <Match when={isNewTopScore()}>Wow! You just beat the top score!</Match>
-                <Match when={isWin()}>Good job! You guessed the right color</Match>
-              </Switch>
-            </p>
-            <button
-              type="button"
-              class="btn btn-accent btn-block text-lg text-slate-50"
-              onClick={initializeGame}
-            >
-              <Show when={isWin()} fallback="Try Again">
-                Next Round
-              </Show>
-            </button>
-          </div>
-          <form method="dialog" onSubmit={[setIsModalOpen, false]} class="modal-backdrop">
-            <button>close</button>
-          </form>
-        </dialog>
       </main>
 
       <RightSidebar>
@@ -134,6 +106,14 @@ export const App: Component = () => {
           <div class="rounded-lg bg-gradient-colorful p-3 font-display text-4xl">{topScore()}</div>
         </section>
       </RightSidebar>
+
+      <RoundResultsModal
+        isOpen={isModalOpen()}
+        isWin={isWin()}
+        isNewTopScore={isNewTopScore()}
+        handleClose={closeModal}
+        handleClick={initializeGame}
+      />
     </Layout>
   );
 };
