@@ -1,29 +1,19 @@
 import { Component } from 'solid-js';
 
 import { Logo } from './Logo';
-import { DifficultySelect } from './DifficultySelect';
-import { Difficulty } from '../lib/types';
 
-type Props = {
-  currentDifficulty: Difficulty;
-  changeDifficulty: (newDifficulty: Difficulty) => void;
-};
-
-export const Header: Component<Props> = (props) => {
+export const Header: Component = () => {
   return (
-    <>
-      <header class="my-3 flex flex-col items-center">
-        <Logo />
-        <div class="chat chat-end my-4">
-          <div class="chat-bubble chat-bubble-primary max-w-44 text-center text-slate-50">
-            Try and guess the color based on the RGB values! 🌈
-          </div>
+    <header class="flex flex-col gap-5">
+      <Logo />
+      <div class="chat chat-end">
+        <div class="chat-bubble chat-bubble-primary max-w-44 text-center text-slate-50">
+          Try and guess the color based on the RGB values 🌈
         </div>
-      </header>
-      <DifficultySelect
-        currentDifficulty={props.currentDifficulty}
-        onClick={props.changeDifficulty}
-      />
-    </>
+      </div>
+      <div class="chat chat-start">
+        <div class="chat-bubble max-w-44 text-center text-slate-50">Good luck! 🍀</div>
+      </div>
+    </header>
   );
 };

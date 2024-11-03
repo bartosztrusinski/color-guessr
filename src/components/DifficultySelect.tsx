@@ -11,15 +11,16 @@ type Props = {
 
 export const DifficultySelect: Component<Props> = (props) => {
   return (
-    <div class="mx-auto">
-      <p class="mb-1">Select difficulty</p>
+    <div>
+      <div class="mb-1 text-center">Select difficulty</div>
       <div class="join">
         <Index each={getKeys(difficultySettings)}>
           {(difficulty) => (
             <button
               type="button"
-              class={`btn btn-primary join-item font-bold text-slate-50 ${props.currentDifficulty === difficulty() ? 'btn-active' : ''}`}
-              onClick={() => props.onClick(difficulty())}
+              class="btn btn-primary join-item font-bold text-slate-50"
+              classList={{ 'btn-active': props.currentDifficulty === difficulty() }}
+              onClick={[props.onClick, difficulty]}
             >
               {capitalize(difficulty())}
             </button>

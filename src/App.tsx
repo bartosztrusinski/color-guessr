@@ -8,11 +8,13 @@ import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
 import { ReloadIcon } from './components/ReloadIcon';
 import { RoundResultsModal } from './components/RoundResultsModal';
+import { Score } from './components/Score';
+import { DifficultySelect } from './components/DifficultySelect';
 
 import { createPersistentSignal } from './lib/createPersistentSignal';
 import { GameState } from './lib/types';
-import { generateRoundData, getPointsPerWin, setRoundBoardsToWinningColor } from './utils';
 import { DEFAULT_DIFFICULTY, storageKeyConstants } from './lib/config';
+import { generateRoundData, getPointsPerWin, setRoundBoardsToWinningColor } from './utils';
 
 export const App: Component = () => {
   const [gameState, setGameState] = createPersistentSignal<GameState>(
@@ -74,11 +76,16 @@ export const App: Component = () => {
   return (
     <Layout>
       <LeftSidebar>
-        <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
+        <Header />
+        <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
+        <div class="flex items-center gap-8 lg:hidden">
+          <Score score={score()} />
+          <Score score={topScore()} label="Top Score" size="sm" />
+        </div>
         <Show when={!isPlaying()}>
           <button
             type="button"
-            class="btn btn-accent btn-lg mt-12 self-center text-base text-slate-50"
+            class="btn btn-accent btn-lg text-base text-slate-50"
             onClick={initializeGame}
           >
             <ReloadIcon class="size-7" />
@@ -88,7 +95,8 @@ export const App: Component = () => {
 
       <main class="p-4 text-center md:py-8">
         <MobileDrawer>
-          <Header currentDifficulty={difficulty()} changeDifficulty={setDifficulty} />
+          <Header />
+          <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
         </MobileDrawer>
         <h3 class="mb-4 inline-block bg-gradient-colorful bg-clip-text font-display text-4xl font-bold text-transparent">
           RGB ({Object.values(winningColor()).join(', ')})
@@ -97,14 +105,8 @@ export const App: Component = () => {
       </main>
 
       <RightSidebar>
-        <section class="mt-3 flex flex-col items-center gap-1 text-slate-50">
-          <div class="text-lg font-bold">Score</div>
-          <div class="rounded-lg bg-gradient-colorful p-4 font-display text-5xl">{score()}</div>
-        </section>
-        <section class="mt-5 flex flex-col items-center gap-1 text-slate-50">
-          <div class="font-bold">Top Score</div>
-          <div class="rounded-lg bg-gradient-colorful p-3 font-display text-4xl">{topScore()}</div>
-        </section>
+        <Score score={score()} size="lg" />
+        <Score score={topScore()} label="Top Score" />
       </RightSidebar>
 
       <RoundResultsModal
