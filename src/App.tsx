@@ -5,11 +5,12 @@ import { Layout } from './components/Layout';
 import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
 import { Header } from './components/Header';
-import { MobileDrawer } from './components/MobileDrawer';
 import { ReloadIcon } from './components/ReloadIcon';
 import { RoundResultsModal } from './components/RoundResultsModal';
 import { Score } from './components/Score';
 import { DifficultySelect } from './components/DifficultySelect';
+import { Drawer } from './components/Drawer';
+import { LogoIcon } from './components/LogoIcon';
 
 import { createPersistentSignal } from './lib/createPersistentSignal';
 import { GameState } from './lib/types';
@@ -77,28 +78,51 @@ export const App: Component = () => {
     <Layout>
       <LeftSidebar>
         <Header />
-        <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
-        <div class="flex items-center gap-8 lg:hidden">
+        <div class="flex items-center gap-6 lg:hidden">
           <Score score={score()} />
-          <Score score={topScore()} label="Top Score" size="sm" />
+          <Score score={topScore()} label="Top Score" />
         </div>
+        <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
         <Show when={!isPlaying()}>
-          <button
-            type="button"
-            class="btn btn-accent btn-lg text-base text-slate-50"
-            onClick={initializeGame}
-          >
-            <ReloadIcon class="size-7" />
-          </button>
+          <div>
+            <div class="mb-1 text-center">Play again</div>
+            <button
+              type="button"
+              class="btn btn-accent btn-lg text-base text-slate-50"
+              onClick={initializeGame}
+            >
+              <ReloadIcon class="size-7" />
+            </button>
+          </div>
         </Show>
       </LeftSidebar>
 
       <main class="p-4 text-center md:py-8">
-        <MobileDrawer>
-          <Header />
-          <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
-        </MobileDrawer>
-        <h3 class="mb-4 inline-block bg-gradient-colorful bg-clip-text font-display text-4xl font-bold text-transparent">
+        <div class="flex place-content-between items-center pb-4 md:hidden">
+          <Drawer>
+            <Header />
+          </Drawer>
+          <div class="flex items-center gap-2">
+            <Score score={0} size="sm" />
+            <Score score={25} label="Top Score" size="sm" />
+          </div>
+          <Drawer icon={<LogoIcon class="size-6" />} drawerOpenSide="right">
+            <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
+            <Show when={!isPlaying()}>
+              <div>
+                <div class="mb-1 text-center">Play again</div>
+                <button
+                  type="button"
+                  class="btn btn-accent btn-block text-base text-slate-50"
+                  onClick={initializeGame}
+                >
+                  <ReloadIcon class="size-7" />
+                </button>
+              </div>
+            </Show>
+          </Drawer>
+        </div>
+        <h3 class="mb-4 inline-block bg-gradient-colorful bg-clip-text font-display text-3xl font-bold text-transparent md:text-4xl">
           RGB ({Object.values(winningColor()).join(', ')})
         </h3>
         <Board colors={colorsOnBoard()} onClick={guessColor} />
