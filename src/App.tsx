@@ -5,12 +5,12 @@ import { Layout } from './components/Layout';
 import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
 import { Header } from './components/Header';
-import { ReloadIcon } from './components/ReloadIcon';
 import { RoundResultsModal } from './components/RoundResultsModal';
 import { Score } from './components/Score';
 import { DifficultySelect } from './components/DifficultySelect';
 import { Drawer } from './components/Drawer';
 import { LogoIcon } from './components/LogoIcon';
+import { PlayAgainButton } from './components/PlayAgainButton';
 
 import { createPersistentSignal } from './lib/createPersistentSignal';
 import { GameState } from './lib/types';
@@ -84,16 +84,7 @@ export const App: Component = () => {
         </div>
         <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
         <Show when={!isPlaying()}>
-          <div>
-            <div class="mb-1 text-center">Play again</div>
-            <button
-              type="button"
-              class="btn btn-accent btn-lg text-base text-slate-50"
-              onClick={initializeGame}
-            >
-              <ReloadIcon class="size-7" />
-            </button>
-          </div>
+          <PlayAgainButton handleClick={initializeGame} size="lg" />
         </Show>
       </LeftSidebar>
 
@@ -109,16 +100,7 @@ export const App: Component = () => {
           <Drawer icon={<LogoIcon class="size-6" />} drawerOpenSide="right">
             <DifficultySelect currentDifficulty={difficulty()} onClick={setDifficulty} />
             <Show when={!isPlaying()}>
-              <div>
-                <div class="mb-1 text-center">Play again</div>
-                <button
-                  type="button"
-                  class="btn btn-accent btn-block text-base text-slate-50"
-                  onClick={initializeGame}
-                >
-                  <ReloadIcon class="size-7" />
-                </button>
-              </div>
+              <PlayAgainButton handleClick={initializeGame} />
             </Show>
           </Drawer>
         </div>
