@@ -2,12 +2,12 @@ import { createSignal } from 'solid-js';
 
 import { generateRoundData } from '../utils';
 import { DEFAULT_DIFFICULTY, storageKeyConstants } from './config';
-import { GameState } from './types';
+import { RoundStatus } from './types';
 import { createPersistentSignal } from './createPersistentSignal';
 
-const [gameState, setGameState] = createPersistentSignal<GameState>(
+const [roundStatus, setRoundStatus] = createPersistentSignal<RoundStatus>(
   storageKeyConstants.GAME_STATE,
-  GameState.Playing,
+  RoundStatus.Playing,
 );
 const [roundData, setRoundData] = createPersistentSignal(
   storageKeyConstants.ROUND_DATA,
@@ -25,12 +25,21 @@ const [isNewTopScore, setIsNewTopScore] = createSignal(false);
 const colorsOnBoard = () => roundData()[difficulty()].colors;
 const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
 const winningColor = () => colorsOnBoard()[winningColorIndex()];
-const isPlaying = () => gameState() === GameState.Playing;
-const isWin = () => gameState() === GameState.Win;
-const isLose = () => gameState() === GameState.Lose;
+const isPlaying = () => roundStatus() === RoundStatus.Playing;
+const isWin = () => roundStatus() === RoundStatus.Win;
+const isLose = () => roundStatus() === RoundStatus.Lose;
+
+const closeModal = () => setIsModalOpen(false);
+
+const initializeGame = () => {
+  setRoundStatus(RoundStatus.Playing);
+  setRoundData(generateRoundData());
+  closeModal();
+  setIsNewTopScore(false);
+};
 
 export {
-  setGameState,
+  setRoundStatus,
   roundData,
   setRoundData,
   difficulty,
@@ -43,8 +52,12 @@ export {
   setIsModalOpen,
   isNewTopScore,
   setIsNewTopScore,
+  colorsOnBoard,
+  winningColorIndex,
   winningColor,
   isPlaying,
   isWin,
   isLose,
+  closeModal,
+  initializeGame,
 };
