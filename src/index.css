@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import 'tailwindcss';
+@plugin 'daisyui'
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 @layer base {
   :root {
