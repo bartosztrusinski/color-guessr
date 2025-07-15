@@ -1,4 +1,5 @@
 import { Component } from 'solid-js';
+import { cn } from '../utils';
 
 type Props = {
   class?: string;
@@ -11,7 +12,7 @@ export const LogoIcon: Component<Props> = (props) => {
       viewBox="0 0 24 24"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class={`size-12 fill-none stroke-current stroke-2 ${props.class}`}
+      class={cn('size-12 fill-none stroke-current stroke-2', props.class)}
     >
       <line x1="6" x2="10" y1="12" y2="12" />
       <line x1="8" x2="8" y1="10" y2="14" />

@@ -35,9 +35,9 @@ export const Score: Component<Props> = (explicitProps) => {
   const classes = sizeClasses[props.size];
 
   return (
-    <div class="text-center text-slate-50">
-      <div class={`mb-1 ${classes.label}`}>{props.label}</div>
-      <div class={`rounded-lg bg-gradient-colorful font-display ${classes.score}`}>
+    <div class="text-center">
+      <div class={`mb-1 font-medium ${classes.label}`}>{props.label}</div>
+      <div class={`bg-primary font-display rounded-lg font-semibold ${classes.score}`}>
         {props.score}
       </div>
     </div>

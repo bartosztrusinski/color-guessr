@@ -39,7 +39,7 @@ export const App: Component = () => {
         </div>
         <DifficultySelect />
         <Show when={!isPlaying()}>
-          <PlayAgainButton size="lg" />
+          <PlayAgainButton class="btn-xl" />
         </Show>
       </LeftSidebar>
 
@@ -52,7 +52,7 @@ export const App: Component = () => {
             <Score score={score()} size="sm" />
             <Score score={topScore()} label="Top Score" size="sm" />
           </div>
-          <Drawer icon={<LogoIcon class="size-6" />} drawerOpenSide="right">
+          <Drawer icon={<LogoIcon class="size-8" />} drawerOpenSide="right">
             <DifficultySelect />
             <Show when={isWin() || isLose()}>
               <PlayAgainButton />

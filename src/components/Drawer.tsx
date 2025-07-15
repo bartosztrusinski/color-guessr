@@ -10,7 +10,7 @@ export const Drawer: ParentComponent<Props> = (explicitProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
   const id = createUniqueId();
   const props = mergeProps(
-    { icon: <MenuIcon class="size-6" />, drawerOpenSide: 'left' },
+    { icon: <MenuIcon class="size-8" />, drawerOpenSide: 'left' },
     explicitProps,
   );
 
@@ -26,13 +26,13 @@ export const Drawer: ParentComponent<Props> = (explicitProps) => {
         onInput={[setIsDrawerOpen, !isDrawerOpen]}
       />
       <div class="drawer-content">
-        <label for={id} class="btn btn-square btn-primary drawer-button text-slate-50">
+        <label for={id} class="btn btn-square btn-lg btn-primary drawer-button text-slate-50">
           {props.icon}
         </label>
       </div>
       <div class="drawer-side z-10">
         <label for={id} aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="menu w-72 gap-6 rounded-xl bg-base-200 p-6 pb-16 text-base-content">
+        <div class="menu bg-base-200 text-base-content w-72 gap-6 rounded-xl p-6 pb-16">
           {props.children}
         </div>
       </div>

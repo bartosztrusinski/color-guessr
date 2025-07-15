@@ -4,33 +4,22 @@ import { ReloadIcon } from './ReloadIcon';
 
 import { defaultProps } from '../lib/defaultProps';
 import { initializeGame } from '../lib/gameState';
-
-type ButtonSize = 'sm' | 'md' | 'lg' | 'full';
+import { cn } from '../utils';
 
 type Props = {
-  size?: ButtonSize;
+  class?: string;
 };
 
-const buttonSizeClasses: Record<ButtonSize, string> = {
-  sm: 'btn-sm',
-  md: 'btn-md',
-  lg: 'btn-lg',
-  full: 'btn-block',
-};
-
-export const PlayAgainButton: Component<Props> = (explicitProps) => {
-  const props = defaultProps({ size: 'full' }, explicitProps);
-  const buttonSizeClass = buttonSizeClasses[props.size];
-
+export const PlayAgainButton: Component<Props> = (props) => {
   return (
     <div>
       <div class="mb-1 text-center">Play again</div>
       <button
         type="button"
-        class={`btn-m btn btn-accent text-base text-slate-50 ${buttonSizeClass}`}
+        class={cn('btn btn-accent text-base text-slate-50', props.class)}
         onClick={initializeGame}
       >
-        <ReloadIcon class="size-7" />
+        <ReloadIcon class="size-8" />
       </button>
     </div>
   );
