@@ -23,7 +23,7 @@ export const Modal: ParentComponent<Props> = (props) => {
       <div class="modal-box">
         {props.children}
         <form method="dialog" onSubmit={props.handleClose}>
-          <button class="btn btn-error btn-sm absolute top-4 right-4 text-inherit">⨉</button>
+          <button class="btn btn-error btn-sm absolute top-4 right-4">⨉</button>
         </form>
       </div>
     </dialog>
