@@ -1,5 +1,7 @@
 import { difficultySettings } from './lib/config';
 import { BoardData, Difficulty, Rgb, RoundData } from './lib/types';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 function generateRandomRgb(): Rgb {
   return {
@@ -59,4 +61,8 @@ export function setRoundBoardsToWinningColor(roundData: RoundData): RoundData {
       },
     };
   }, {} as RoundData);
+}
+
+export function cn(...classes: ClassValue[]): string {
+  return twMerge(clsx(classes));
 }
