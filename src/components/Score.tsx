@@ -1,44 +1,22 @@
-import { Component } from 'solid-js';
+import { Component, mergeProps } from 'solid-js';
 
-import { defaultProps } from '../lib/defaultProps';
-
-type Size = 'sm' | 'md' | 'lg';
-
-type Classes = {
-  label: string;
-  score: string;
-};
+import { cn } from '../utils';
 
 type Props = {
   score: number;
   label?: string;
-  size?: Size;
+  scoreClass?: string;
+  labelClass?: string;
 };
 
-const sizeClasses: Record<Size, Classes> = {
-  sm: {
-    label: 'text-sm',
-    score: 'text-3xl p-2',
-  },
-  md: {
-    label: 'text-base',
-    score: 'text-4xl p-3',
-  },
-  lg: {
-    label: 'text-lg',
-    score: 'text-5xl p-4',
-  },
-};
-
-export const Score: Component<Props> = (explicitProps) => {
-  const props = defaultProps({ label: 'Score', size: 'md' }, explicitProps);
-  const classes = sizeClasses[props.size];
+export const Score: Component<Props> = (props) => {
+  const { label, score, labelClass, scoreClass } = mergeProps({ label: 'Score', score: 0 }, props);
 
   return (
     <div class="text-center">
-      <div class={`mb-1 font-medium ${classes.label}`}>{props.label}</div>
-      <div class={`bg-primary font-display rounded-lg font-semibold ${classes.score}`}>
-        {props.score}
+      <div class={cn('mb-1 font-medium', labelClass)}>{label}</div>
+      <div class={cn('bg-primary font-display rounded-lg p-3 text-4xl font-semibold', scoreClass)}>
+        {score}
       </div>
     </div>
   );

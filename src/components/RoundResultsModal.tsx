@@ -1,7 +1,5 @@
 import { Match, Show, Switch } from 'solid-js';
-
 import { Modal } from './Modal';
-
 import { closeModal, initializeGame, isModalOpen, isNewTopScore, isWin } from '../lib/gameState';
 
 export const RoundResultsModal = () => {
@@ -19,11 +17,7 @@ export const RoundResultsModal = () => {
             <Match when={isWin()}>Good job! You guessed the right color</Match>
           </Switch>
         </p>
-        <button
-          type="button"
-          class="btn btn-accent btn-block text-lg text-inherit"
-          onClick={initializeGame}
-        >
+        <button type="button" class="btn btn-accent btn-block text-lg" onClick={initializeGame}>
           <Show when={isWin()} fallback="Try Again">
             Next Round
           </Show>

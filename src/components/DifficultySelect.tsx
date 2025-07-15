@@ -13,7 +13,7 @@ export const DifficultySelect: Component = () => {
           {(difficulty) => (
             <button
               type="button"
-              class="btn btn-primary join-item font-bold text-slate-50"
+              class="btn btn-primary join-item font-bold"
               classList={{ 'btn-active': currentDifficulty() === difficulty() }}
               onClick={[setDifficulty, difficulty]}
             >

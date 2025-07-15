@@ -26,13 +26,13 @@ export const Drawer: ParentComponent<Props> = (explicitProps) => {
         onInput={[setIsDrawerOpen, !isDrawerOpen]}
       />
       <div class="drawer-content">
-        <label for={id} class="btn btn-square btn-lg btn-primary drawer-button text-slate-50">
+        <label for={id} class="btn btn-square btn-lg btn-primary">
           {props.icon}
         </label>
       </div>
       <div class="drawer-side z-10">
         <label for={id} aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="menu bg-base-200 text-base-content w-72 gap-6 rounded-xl p-6 pb-16">
+        <div class="menu bg-base-100 text-base-content m-2 w-72 gap-6 rounded-lg p-6 pb-16">
           {props.children}
         </div>
       </div>

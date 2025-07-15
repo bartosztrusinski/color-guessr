@@ -48,14 +48,20 @@ export const App: Component = () => {
           <Drawer>
             <Header />
           </Drawer>
+
           <div class="flex items-center gap-2">
-            <Score score={score()} size="sm" />
-            <Score score={topScore()} label="Top Score" size="sm" />
+            <Score score={score()} labelClass="text-sm" scoreClass="text-3xl p-2" />
+            <Score
+              score={topScore()}
+              label="Top Score"
+              labelClass="text-sm"
+              scoreClass="text-3xl p-2"
+            />
           </div>
           <Drawer icon={<LogoIcon class="size-8" />} drawerOpenSide="right">
             <DifficultySelect />
             <Show when={isWin() || isLose()}>
-              <PlayAgainButton />
+              <PlayAgainButton class="btn-block" />
             </Show>
           </Drawer>
         </div>
@@ -66,7 +72,7 @@ export const App: Component = () => {
       </main>
 
       <RightSidebar>
-        <Score score={score()} size="lg" />
+        <Score score={score()} labelClass="text-lg" scoreClass="text-5xl p-4" />
         <Score score={topScore()} label="Top Score" />
       </RightSidebar>
 
