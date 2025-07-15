@@ -1,16 +1,9 @@
-import { Component, createEffect, For, Show } from 'solid-js';
-import { createPersistentSignal } from '../lib/createPersistentSignal';
-import { capitalize, cn } from '../utils';
-
-const themes = ['default', 'cupcake', 'retro', 'forest', 'cyberpunk', 'synthwave'];
+import { Component, For, Show } from 'solid-js';
+import { capitalize } from '../utils';
+import { currentTheme, setTheme } from '../lib/gameState';
+import { THEMES } from '../lib/config';
 
 export const ThemeController: Component = () => {
-  const [currentTheme, setTheme] = createPersistentSignal<string>('theme', 'default');
-
-  createEffect(() => {
-    document.documentElement.setAttribute('data-theme', currentTheme());
-  });
-
   return (
     <div>
       <p class="mb-1 text-center">Select theme</p>
@@ -29,7 +22,7 @@ export const ThemeController: Component = () => {
           tabindex={0}
           class="dropdown-content bg-base-200 menu rounded-box z-1 w-full min-w-40 p-2 shadow-xl"
         >
-          <For each={themes}>
+          <For each={THEMES}>
             {(theme) => (
               <li>
                 <button

@@ -2,6 +2,9 @@ import { ConfigKey, Difficulty, DifficultySettings } from './types';
 
 export const DEFAULT_DIFFICULTY: Difficulty = Difficulty.Medium;
 
+export const THEMES = ['default', 'cupcake', 'retro', 'forest', 'cyberpunk', 'synthwave'] as const;
+export const DEFAULT_THEME: (typeof THEMES)[number] = 'default';
+
 export const difficultySettings: Record<Difficulty, DifficultySettings> = {
   easy: { boardSize: 3, pointsPerWin: 1 },
   medium: { boardSize: 6, pointsPerWin: 3 },
@@ -9,7 +12,14 @@ export const difficultySettings: Record<Difficulty, DifficultySettings> = {
 };
 
 const storagePrefix = 'color-guessr';
-const storageKeys = ['score', 'top-score', 'difficulty', 'round-data', 'game-state'] as const;
+const storageKeys = [
+  'score',
+  'top-score',
+  'difficulty',
+  'round-data',
+  'game-state',
+  'theme',
+] as const;
 
 export const storageKeyConstants = Object.freeze(generateStorageKeyConstants(storageKeys));
 

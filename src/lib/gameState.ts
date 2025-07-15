@@ -1,7 +1,7 @@
-import { createSignal } from 'solid-js';
+import { createEffect, createSignal } from 'solid-js';
 
 import { generateRoundData } from '../utils';
-import { DEFAULT_DIFFICULTY, storageKeyConstants } from './config';
+import { DEFAULT_DIFFICULTY, DEFAULT_THEME, storageKeyConstants } from './config';
 import { RoundStatus } from './types';
 import { createPersistentSignal } from './createPersistentSignal';
 
@@ -21,6 +21,11 @@ const [score, setScore] = createPersistentSignal(storageKeyConstants.SCORE, 0);
 const [topScore, setTopScore] = createPersistentSignal(storageKeyConstants.TOP_SCORE, 0);
 const [isModalOpen, setIsModalOpen] = createSignal(false);
 const [isNewTopScore, setIsNewTopScore] = createSignal(false);
+const [currentTheme, setTheme] = createPersistentSignal(storageKeyConstants.THEME, DEFAULT_THEME);
+
+createEffect(() => {
+  document.documentElement.setAttribute('data-theme', currentTheme());
+});
 
 const colorsOnBoard = () => roundData()[difficulty()].colors;
 const winningColorIndex = () => roundData()[difficulty()].winningColorIndex;
@@ -52,6 +57,8 @@ export {
   setIsModalOpen,
   isNewTopScore,
   setIsNewTopScore,
+  currentTheme,
+  setTheme,
   colorsOnBoard,
   winningColorIndex,
   winningColor,
