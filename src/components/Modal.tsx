@@ -1,6 +1,4 @@
-import { ParentComponent } from 'solid-js';
-import { onPressEscape } from '../lib/onPressEscape';
-import { Portal } from 'solid-js/web';
+import { createEffect, ParentComponent } from 'solid-js';
 
 type Props = {
   isOpen: boolean;
@@ -8,16 +6,26 @@ type Props = {
 };
 
 export const Modal: ParentComponent<Props> = (props) => {
-  onPressEscape(props.handleClose);
+  let modalRef: HTMLDialogElement | undefined;
+
+  createEffect(() => {
+    if (!modalRef) return;
+
+    if (props.isOpen) {
+      modalRef.showModal();
+    } else {
+      modalRef.close();
+    }
+  });
 
   return (
-    <Portal>
-      <dialog class="modal" classList={{ 'modal-open': props.isOpen }}>
-        <div class="modal-box">{props.children}</div>
-        <form method="dialog" onSubmit={props.handleClose} class="modal-backdrop">
-          <button>close</button>
+    <dialog ref={modalRef} class="modal">
+      <div class="modal-box">
+        {props.children}
+        <form method="dialog" onSubmit={props.handleClose}>
+          <button class="btn btn-error btn-sm absolute top-4 right-4 text-inherit">⨉</button>
         </form>
-      </dialog>
-    </Portal>
+      </div>
+    </dialog>
   );
 };
