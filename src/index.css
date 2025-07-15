@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import 'tailwindcss';
 @plugin 'daisyui';
 
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@theme {
+  --font-display: 'Righteous', sans-serif;
+  --background-image-gradient: linear-gradient(
+    -50deg,
+    hsl(202, 84%, 59%),
+    hsl(217, 84%, 59%),
+    hsl(252, 79%, 62%),
+    hsl(296, 62%, 62%),
+    hsl(328, 77%, 68%),
+    hsl(347, 77%, 66%),
+    hsl(11, 75%, 66%),
+    hsl(34, 100%, 71%)
+  );
+}
 
 @layer base {
   :root {

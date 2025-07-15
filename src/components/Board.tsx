@@ -43,7 +43,7 @@ export const Board: Component = () => {
         {(color, cardIndex) => (
           <button
             type="button"
-            class="btn aspect-square h-full border-none bg-[var(--card-color)] p-0 hover:scale-105 hover:bg-[var(--card-color)]"
+            class="btn aspect-square h-full border-none bg-(--card-color) p-0 hover:scale-105 hover:bg-(--card-color)"
             style={{ '--card-color': `rgb(${color.r} ${color.g} ${color.b})` }}
             onClick={[guessColor, cardIndex()]}
           ></button>

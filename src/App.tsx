@@ -59,7 +59,7 @@ export const App: Component = () => {
             </Show>
           </Drawer>
         </div>
-        <h3 class="bg-gradient-colorful font-display mb-4 inline-block bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
+        <h3 class="bg-gradient font-display mb-4 inline-block bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
           RGB ({Object.values(winningColor()).join(', ')})
         </h3>
         <Board />
