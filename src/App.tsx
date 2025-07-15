@@ -11,6 +11,7 @@ import { DifficultySelect } from './components/DifficultySelect';
 import { Drawer } from './components/Drawer';
 import { LogoIcon } from './components/LogoIcon';
 import { PlayAgainButton } from './components/PlayAgainButton';
+import { ThemeController } from './components/ThemeController';
 
 import {
   isPlaying,
@@ -37,6 +38,7 @@ export const App: Component = () => {
           <Score score={score()} />
           <Score score={topScore()} label="Top Score" />
         </div>
+        <ThemeController />
         <DifficultySelect />
         <Show when={!isPlaying()}>
           <PlayAgainButton class="btn-xl" />
@@ -59,6 +61,7 @@ export const App: Component = () => {
             />
           </div>
           <Drawer icon={<LogoIcon class="size-8" />} drawerOpenSide="right">
+            <ThemeController />
             <DifficultySelect />
             <Show when={isWin() || isLose()}>
               <PlayAgainButton class="btn-block" />
