@@ -8,12 +8,12 @@ export const DifficultySelect: Component = () => {
   return (
     <div>
       <div class="mb-1 text-center">Select difficulty</div>
-      <div class="join">
+      <div class="join w-full">
         <Index each={getKeys(difficultySettings)}>
           {(difficulty) => (
             <button
               type="button"
-              class="btn btn-primary join-item font-bold"
+              class="btn btn-primary join-item grow font-bold"
               classList={{ 'btn-active': currentDifficulty() === difficulty() }}
               onClick={[setDifficulty, difficulty]}
             >

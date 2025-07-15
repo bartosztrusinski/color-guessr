@@ -12,7 +12,7 @@ export const Header: Component = () => {
         </div>
       </div>
       <div class="chat chat-start">
-        <div class="chat-bubble chat-bubble-neutral max-w-44 text-center">Good luck! 🍀</div>
+        <div class="chat-bubble chat-bubble-secondary max-w-44 text-center">Good luck! 🍀</div>
       </div>
     </header>
   );
