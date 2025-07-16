@@ -12,8 +12,8 @@ export function ThemeController() {
     <div>
       <p class="mb-1 text-center">Select theme</p>
       <div class="dropdown dropdown-center w-full">
-        <div tabindex={0} role="button" class="btn btn-primary btn-block justify-between">
-          <span>Theme</span>
+        <div tabindex={0} role="button" class="btn btn-primary btn-block min-w-32 justify-between">
+          <span>{capitalize(appState.theme)}</span>
           <ArrowDownIcon class="size-2 opacity-80" />
         </div>
         <ul
