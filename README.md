@@ -1,34 +1,18 @@
-## Usage
+# Color Guessr 🌈
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+A vibrant web game where you match colors to their corresponding RGB codes. Put your color perception to the test!
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Features
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+- **Color Guessing Gameplay:** Test your ability to match an RGB color code to its visual representation
+- **Multiple Difficulty Levels:** Choose from different levels of difficulty to challenge yourself
+- **Score Tracking:** Keep track of your current score and your all-time high score, which persist between sessions
+- **Themeable UI:** Switch between multiple themes to customize the look and feel of the game
+- **Responsive Design:** Enjoy a seamless experience on both desktop and mobile devices
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## Technology Used
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+- **Framework:** [SolidJS](https://www.solidjs.com/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with [daisyUI](https://daisyui.com/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
