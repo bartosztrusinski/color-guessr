@@ -10,18 +10,18 @@ type Props = {
 };
 
 export const Score: Component<Props> = (props) => {
-  const { label, score, labelClass, scoreClass } = mergeProps({ label: 'Score', score: 0 }, props);
+  const finalProps = mergeProps({ label: 'Score', score: 0 }, props);
 
   return (
     <div class="text-center">
-      <div class={cn('mb-1 font-medium', labelClass)}>{label}</div>
+      <div class={cn('mb-1 font-medium', finalProps.labelClass)}>{finalProps.label}</div>
       <div
         class={cn(
           'bg-primary text-primary-content font-display rounded-lg p-3 text-4xl font-semibold',
-          scoreClass,
+          finalProps.scoreClass,
         )}
       >
-        {score}
+        {finalProps.score}
       </div>
     </div>
   );

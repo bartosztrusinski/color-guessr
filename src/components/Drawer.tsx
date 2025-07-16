@@ -1,23 +1,26 @@
-import { createSignal, createUniqueId, JSX, mergeProps, ParentComponent } from 'solid-js';
+import { createSignal, createUniqueId, JSXElement, mergeProps, ParentComponent } from 'solid-js';
 import { MenuIcon } from './MenuIcon';
 
 type Props = {
-  icon?: JSX.Element;
+  icon?: JSXElement;
   drawerOpenSide?: 'left' | 'right';
 };
 
-export const Drawer: ParentComponent<Props> = (explicitProps) => {
+export const Drawer: ParentComponent<Props> = (props) => {
   const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
   const id = createUniqueId();
-  const props = mergeProps(
+  const finalProps = mergeProps(
     { icon: <MenuIcon class="size-8" />, drawerOpenSide: 'left' },
-    explicitProps,
+    props,
   );
 
   return (
     <div
       class="drawer w-auto"
-      classList={{ 'drawer-open': isDrawerOpen(), 'drawer-end': props.drawerOpenSide === 'right' }}
+      classList={{
+        'drawer-open': isDrawerOpen(),
+        'drawer-end': finalProps.drawerOpenSide === 'right',
+      }}
     >
       <input
         id={id}
@@ -27,13 +30,13 @@ export const Drawer: ParentComponent<Props> = (explicitProps) => {
       />
       <div class="drawer-content">
         <label for={id} class="btn btn-square btn-lg btn-primary">
-          {props.icon}
+          {finalProps.icon}
         </label>
       </div>
       <div class="drawer-side z-10">
         <label for={id} aria-label="close sidebar" class="drawer-overlay"></label>
         <div class="menu bg-base-100 text-base-content m-2 w-72 gap-6 rounded-lg p-6 pb-16">
-          {props.children}
+          {finalProps.children}
         </div>
       </div>
     </div>
