@@ -77,6 +77,7 @@ export function AppProvider(props: Props) {
       roundStatus: RoundStatus.Playing,
       roundData: generateRoundData(),
       isNewTopScore: false,
+      isModalOpen: false,
     }));
   };
 
