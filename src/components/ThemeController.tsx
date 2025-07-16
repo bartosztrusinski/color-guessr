@@ -1,9 +1,11 @@
 import { Component, For, Show } from 'solid-js';
-import { capitalize } from '../utils';
-import { currentTheme, setTheme } from '../lib/gameState';
+import { useAppContext } from '../context/app-context';
 import { THEMES } from '../lib/config';
+import { capitalize } from '../utils';
 
 export const ThemeController: Component = () => {
+  const { appState, setAppState } = useAppContext();
+
   return (
     <div>
       <p class="mb-1 text-center">Select theme</p>
@@ -27,10 +29,10 @@ export const ThemeController: Component = () => {
               <li>
                 <button
                   class="btn btn-ghost btn-primary justify-between"
-                  onClick={[setTheme, theme]}
+                  onClick={() => setAppState('theme', theme)}
                 >
                   <span>{capitalize(theme)}</span>
-                  <Show when={theme === currentTheme()}>
+                  <Show when={theme === appState.theme}>
                     <svg
                       class="size-3 shrink-0 fill-current opacity-80"
                       xmlns="http://www.w3.org/2000/svg"

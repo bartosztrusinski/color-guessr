@@ -1,40 +1,30 @@
 import { Component, For } from 'solid-js';
-
+import { useAppContext } from '../context/app-context';
 import { getPointsPerWin, setRoundBoardsToWinningColor } from '../utils';
-import { RoundStatus } from '../lib/types';
-import {
-  colorsOnBoard,
-  difficulty,
-  isPlaying,
-  roundData,
-  score,
-  setRoundStatus,
-  setIsModalOpen,
-  setIsNewTopScore,
-  setRoundData,
-  setScore,
-  setTopScore,
-  topScore,
-  winningColorIndex,
-} from '../lib/gameState';
+import { RoundStatus } from '../types';
 
 export const Board: Component = () => {
+  const { appState, setAppState, colorsOnBoard, isPlaying, winningColorIndex } = useAppContext();
+
   const guessColor = (chosenColorIndex: number) => {
     if (!isPlaying()) {
       return;
     }
 
     const isWin = chosenColorIndex === winningColorIndex();
-    const pointsPerWin = getPointsPerWin(difficulty());
-    const newScore = isWin ? score() + pointsPerWin : 0;
-    const newRoundData = setRoundBoardsToWinningColor(roundData());
+    const pointsPerWin = getPointsPerWin(appState.difficulty);
+    const newScore = isWin ? appState.score + pointsPerWin : 0;
+    const newRoundData = setRoundBoardsToWinningColor(appState.roundData);
 
-    setRoundStatus(isWin ? RoundStatus.Win : RoundStatus.Lose);
-    setRoundData(newRoundData);
-    setIsNewTopScore(newScore > topScore());
-    setScore(newScore);
-    setTopScore(Math.max(newScore, topScore()));
-    setIsModalOpen(true);
+    setAppState((prevState) => ({
+      ...prevState,
+      roundStatus: isWin ? RoundStatus.Win : RoundStatus.Lose,
+      roundData: newRoundData,
+      score: newScore,
+      isNewTopScore: newScore > prevState.topScore,
+      topScore: Math.max(newScore, prevState.topScore),
+      isModalOpen: true,
+    }));
   };
 
   return (

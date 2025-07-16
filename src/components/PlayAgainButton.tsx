@@ -1,20 +1,22 @@
 import { Component } from 'solid-js';
-import { ReloadIcon } from './ReloadIcon';
-import { initializeGame } from '../lib/gameState';
+import { useAppContext } from '../context/app-context';
 import { cn } from '../utils';
+import { ReloadIcon } from './ReloadIcon';
 
 type Props = {
   class?: string;
 };
 
 export const PlayAgainButton: Component<Props> = (props) => {
+  const { startRound } = useAppContext();
+
   return (
     <div>
       <div class="mb-1 text-center">Play again</div>
       <button
         type="button"
         class={cn('btn btn-accent font-semibold', props.class)}
-        onClick={initializeGame}
+        onClick={startRound}
       >
         <ReloadIcon class="size-8" />
       </button>

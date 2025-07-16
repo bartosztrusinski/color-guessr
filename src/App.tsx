@@ -13,20 +13,14 @@ import { LogoIcon } from './components/LogoIcon';
 import { PlayAgainButton } from './components/PlayAgainButton';
 import { ThemeController } from './components/ThemeController';
 
-import {
-  isPlaying,
-  isWin,
-  isLose,
-  score,
-  topScore,
-  winningColor,
-  initializeGame,
-} from './lib/gameState';
+import { useAppContext } from './context/app-context';
 
 export const App: Component = () => {
+  const { appState, startRound, isPlaying, isWin, isLose, winningColor } = useAppContext();
+
   onMount(() => {
     if (!isPlaying()) {
-      initializeGame();
+      startRound();
     }
   });
 
@@ -35,8 +29,8 @@ export const App: Component = () => {
       <LeftSidebar>
         <Header />
         <div class="flex items-center gap-6 lg:hidden">
-          <Score score={score()} />
-          <Score score={topScore()} label="Top Score" />
+          <Score score={appState.score} />
+          <Score score={appState.topScore} label="Top Score" />
         </div>
         <ThemeController />
         <DifficultySelect />
@@ -52,9 +46,9 @@ export const App: Component = () => {
           </Drawer>
 
           <div class="flex items-center gap-2">
-            <Score score={score()} labelClass="text-sm" scoreClass="text-3xl p-2" />
+            <Score score={appState.score} labelClass="text-sm" scoreClass="text-3xl p-2" />
             <Score
-              score={topScore()}
+              score={appState.topScore}
               label="Top Score"
               labelClass="text-sm"
               scoreClass="text-3xl p-2"
@@ -75,8 +69,8 @@ export const App: Component = () => {
       </main>
 
       <RightSidebar>
-        <Score score={score()} labelClass="text-lg" scoreClass="text-5xl p-4" />
-        <Score score={topScore()} label="Top Score" />
+        <Score score={appState.score} labelClass="text-lg" scoreClass="text-5xl p-4" />
+        <Score score={appState.topScore} label="Top Score" />
       </RightSidebar>
 
       <RoundResultsModal />

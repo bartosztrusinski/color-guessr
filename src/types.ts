@@ -1,3 +1,5 @@
+import { THEMES } from './lib/config';
+
 enum RoundStatus {
   Playing = 'playing',
   Win = 'win',
@@ -28,11 +30,7 @@ type Rgb = {
   b: number;
 };
 
-export type ConfigKey<T extends string> = Uppercase<Replace<T, '-', '_'>>;
-
-type Replace<Str extends string, ToReplace extends string, Replacement extends string> =
-  Str extends `${infer Prefix}${ToReplace}${infer Suffix}` ? `${Prefix}${Replacement}${Suffix}`
-  : Str;
+type Theme = (typeof THEMES)[number];
 
 export {
   RoundStatus,
@@ -41,4 +39,5 @@ export {
   type BoardData,
   type DifficultySettings,
   type Rgb,
+  type Theme,
 };

@@ -1,10 +1,11 @@
 import { Component, Index } from 'solid-js';
-
-import { capitalize, getKeys } from '../utils';
+import { useAppContext } from '../context/app-context';
 import { difficultySettings } from '../lib/config';
-import { difficulty as currentDifficulty, setDifficulty } from '../lib/gameState';
+import { capitalize, getKeys } from '../utils';
 
 export const DifficultySelect: Component = () => {
+  const { appState, setAppState } = useAppContext();
+
   return (
     <div>
       <div class="mb-1 text-center">Select difficulty</div>
@@ -14,8 +15,8 @@ export const DifficultySelect: Component = () => {
             <button
               type="button"
               class="btn btn-primary join-item grow font-bold"
-              classList={{ 'btn-active': currentDifficulty() === difficulty() }}
-              onClick={[setDifficulty, difficulty]}
+              classList={{ 'btn-active': appState.difficulty === difficulty() }}
+              onClick={() => setAppState('difficulty', difficulty())}
             >
               {capitalize(difficulty())}
             </button>
