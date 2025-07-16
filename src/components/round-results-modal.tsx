@@ -1,8 +1,8 @@
 import { Match, Show, Switch } from 'solid-js';
 import { useAppContext } from '../context/app-context';
-import { Modal } from './Modal';
+import { Modal } from './modal';
 
-export const RoundResultsModal = () => {
+export function RoundResultsModal() {
   const { appState, setAppState, isWin, startRound } = useAppContext();
 
   return (
@@ -27,4 +27,4 @@ export const RoundResultsModal = () => {
       </div>
     </Modal>
   );
-};
+}

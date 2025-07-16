@@ -1,6 +1,6 @@
 import { useAppContext } from '../context/app-context';
 import { cn } from '../utils';
-import { ReloadIcon } from './ReloadIcon';
+import { ReloadIcon } from './reload-icon';
 
 type Props = {
   class?: string;

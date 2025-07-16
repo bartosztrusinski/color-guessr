@@ -1,17 +1,17 @@
 import { onMount, Show } from 'solid-js';
 
-import { Board } from './components/Board';
-import { Layout } from './components/Layout';
-import { LeftSidebar } from './components/LeftSidebar';
-import { RightSidebar } from './components/RightSidebar';
-import { Header } from './components/Header';
-import { RoundResultsModal } from './components/RoundResultsModal';
-import { Score } from './components/Score';
-import { DifficultySelect } from './components/DifficultySelect';
-import { Drawer } from './components/Drawer';
-import { LogoIcon } from './components/LogoIcon';
-import { PlayAgainButton } from './components/PlayAgainButton';
-import { ThemeController } from './components/ThemeController';
+import { Board } from './components/board';
+import { Layout } from './components/layout';
+import { LeftSidebar } from './components/left-sidebar';
+import { RightSidebar } from './components/right-sidebar';
+import { Header } from './components/header';
+import { RoundResultsModal } from './components/round-results-modal';
+import { Score } from './components/score';
+import { DifficultySelect } from './components/difficulty-select';
+import { Drawer } from './components/drawer';
+import { LogoIcon } from './components/logo-icon';
+import { PlayAgainButton } from './components/play-again-button';
+import { ThemeController } from './components/theme-controller';
 
 import { useAppContext } from './context/app-context';
 

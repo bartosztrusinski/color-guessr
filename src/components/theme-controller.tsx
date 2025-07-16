@@ -2,8 +2,8 @@ import { For, Show } from 'solid-js';
 import { useAppContext } from '../context/app-context';
 import { THEMES } from '../lib/config';
 import { capitalize } from '../utils';
-import { ArrowDownIcon } from './ArrowDownIcon';
-import { CheckIcon } from './CheckIcon';
+import { ArrowDownIcon } from './arrow-down-icon';
+import { CheckIcon } from './check-icon';
 
 export function ThemeController() {
   const { appState, setAppState } = useAppContext();

@@ -1,11 +1,11 @@
-import { createEffect, ParentComponent } from 'solid-js';
+import { createEffect, ParentProps } from 'solid-js';
 
-type Props = {
+type Props = ParentProps<{
   isOpen: boolean;
   onClose: () => void;
-};
+}>;
 
-export const Modal: ParentComponent<Props> = (props) => {
+export function Modal(props: Props) {
   let modalRef: HTMLDialogElement | undefined;
 
   createEffect(() => {
@@ -28,4 +28,4 @@ export const Modal: ParentComponent<Props> = (props) => {
       </div>
     </dialog>
   );
-};
+}

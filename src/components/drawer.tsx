@@ -1,12 +1,12 @@
-import { createSignal, createUniqueId, JSXElement, mergeProps, ParentComponent } from 'solid-js';
-import { MenuIcon } from './MenuIcon';
+import { createSignal, createUniqueId, JSXElement, mergeProps, ParentProps } from 'solid-js';
+import { MenuIcon } from './menu-icon';
 
-type Props = {
+type Props = ParentProps<{
   icon?: JSXElement;
   drawerOpenSide?: 'left' | 'right';
-};
+}>;
 
-export const Drawer: ParentComponent<Props> = (props) => {
+export function Drawer(props: Props) {
   const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
   const id = createUniqueId();
   const finalProps = mergeProps(
@@ -41,4 +41,4 @@ export const Drawer: ParentComponent<Props> = (props) => {
       </div>
     </div>
   );
-};
+}

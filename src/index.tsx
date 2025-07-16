@@ -2,7 +2,7 @@
 import { render } from 'solid-js/web';
 
 import './index.css';
-import { App } from './App';
+import { App } from './app';
 import { AppProvider } from './context/app-context';
 
 const root = document.getElementById('root');
