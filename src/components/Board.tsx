@@ -1,9 +1,9 @@
-import { Component, For } from 'solid-js';
+import { For } from 'solid-js';
 import { useAppContext } from '../context/app-context';
 import { getPointsPerWin, setRoundBoardsToWinningColor } from '../utils';
 import { RoundStatus } from '../types';
 
-export const Board: Component = () => {
+export function Board() {
   const { appState, setAppState, colorsOnBoard, isPlaying, winningColorIndex } = useAppContext();
 
   const guessColor = (chosenColorIndex: number) => {
@@ -41,4 +41,4 @@ export const Board: Component = () => {
       </For>
     </div>
   );
-};
+}

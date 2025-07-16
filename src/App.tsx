@@ -1,4 +1,4 @@
-import { onMount, Show, type Component } from 'solid-js';
+import { onMount, Show } from 'solid-js';
 
 import { Board } from './components/Board';
 import { Layout } from './components/Layout';
@@ -15,7 +15,7 @@ import { ThemeController } from './components/ThemeController';
 
 import { useAppContext } from './context/app-context';
 
-export const App: Component = () => {
+export function App() {
   const { appState, startRound, isPlaying, isWin, isLose, winningColor } = useAppContext();
 
   onMount(() => {
@@ -76,4 +76,4 @@ export const App: Component = () => {
       <RoundResultsModal />
     </Layout>
   );
-};
+}

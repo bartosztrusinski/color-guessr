@@ -1,4 +1,3 @@
-import { Component } from 'solid-js';
 import { useAppContext } from '../context/app-context';
 import { cn } from '../utils';
 import { ReloadIcon } from './ReloadIcon';
@@ -7,7 +6,7 @@ type Props = {
   class?: string;
 };
 
-export const PlayAgainButton: Component<Props> = (props) => {
+export function PlayAgainButton(props: Props) {
   const { startRound } = useAppContext();
 
   return (
@@ -22,4 +21,4 @@ export const PlayAgainButton: Component<Props> = (props) => {
       </button>
     </div>
   );
-};
+}

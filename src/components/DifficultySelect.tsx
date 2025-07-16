@@ -1,9 +1,9 @@
-import { Component, Index } from 'solid-js';
+import { Index } from 'solid-js';
 import { useAppContext } from '../context/app-context';
 import { difficultySettings } from '../lib/config';
 import { capitalize, getKeys } from '../utils';
 
-export const DifficultySelect: Component = () => {
+export function DifficultySelect() {
   const { appState, setAppState } = useAppContext();
 
   return (
@@ -25,4 +25,4 @@ export const DifficultySelect: Component = () => {
       </div>
     </div>
   );
-};
+}

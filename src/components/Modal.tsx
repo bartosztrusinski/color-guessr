@@ -2,7 +2,7 @@ import { createEffect, ParentComponent } from 'solid-js';
 
 type Props = {
   isOpen: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 };
 
 export const Modal: ParentComponent<Props> = (props) => {
@@ -22,7 +22,7 @@ export const Modal: ParentComponent<Props> = (props) => {
     <dialog ref={modalRef} class="modal">
       <div class="modal-box">
         {props.children}
-        <form method="dialog" onSubmit={props.handleClose}>
+        <form method="dialog" onSubmit={props.onClose}>
           <button class="btn btn-error btn-sm absolute top-4 right-4">⨉</button>
         </form>
       </div>

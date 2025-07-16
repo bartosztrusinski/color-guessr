@@ -1,7 +1,7 @@
-import { difficultySettings } from './lib/config';
-import { BoardData, Difficulty, Rgb, RoundData } from './lib/types';
-import { clsx, type ClassValue } from 'clsx';
+import { clsx, ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { difficultySettings } from './lib/config';
+import { BoardData, Difficulty, Rgb, RoundData } from './types';
 
 function generateRandomRgb(): Rgb {
   return {

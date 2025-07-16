@@ -1,8 +1,6 @@
-import { Component } from 'solid-js';
-
 import { Logo } from './Logo';
 
-export const Header: Component = () => {
+export function Header() {
   return (
     <header class="flex flex-col gap-5">
       <Logo />
@@ -16,4 +14,4 @@ export const Header: Component = () => {
       </div>
     </header>
   );
-};
+}

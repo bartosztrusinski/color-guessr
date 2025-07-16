@@ -1,5 +1,4 @@
-import { Component, mergeProps } from 'solid-js';
-
+import { mergeProps } from 'solid-js';
 import { cn } from '../utils';
 
 type Props = {
@@ -9,7 +8,7 @@ type Props = {
   labelClass?: string;
 };
 
-export const Score: Component<Props> = (props) => {
+export function Score(props: Props) {
   const finalProps = mergeProps({ label: 'Score', score: 0 }, props);
 
   return (
@@ -25,4 +24,4 @@ export const Score: Component<Props> = (props) => {
       </div>
     </div>
   );
-};
+}

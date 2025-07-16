@@ -1,11 +1,10 @@
-import { Component } from 'solid-js';
 import { cn } from '../utils';
 
 type Props = {
   class?: string;
 };
 
-export const ReloadIcon: Component<Props> = (props) => {
+export function ReloadIcon(props: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,4 +17,4 @@ export const ReloadIcon: Component<Props> = (props) => {
       <path d="M21 3v5h-5" />
     </svg>
   );
-};
+}

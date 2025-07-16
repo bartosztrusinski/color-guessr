@@ -1,8 +1,6 @@
-import { Component } from 'solid-js';
-
 import { LogoIcon } from './LogoIcon';
 
-export const Logo: Component = () => {
+export function Logo() {
   return (
     <div class="flex items-center justify-center gap-2">
       <LogoIcon class="bg-gradient size-12 -rotate-12 rounded-lg p-2" />
@@ -11,4 +9,4 @@ export const Logo: Component = () => {
       </h1>
     </div>
   );
-};
+}

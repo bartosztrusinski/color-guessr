@@ -1,11 +1,10 @@
-import { Component } from 'solid-js';
 import { cn } from '../utils';
 
 type Props = {
   class?: string;
 };
 
-export const LogoIcon: Component<Props> = (props) => {
+export function LogoIcon(props: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,4 +20,4 @@ export const LogoIcon: Component<Props> = (props) => {
       <rect width="20" height="12" x="2" y="6" rx="2" />
     </svg>
   );
-};
+}

@@ -1,11 +1,10 @@
-import { Component } from 'solid-js';
 import { cn } from '../utils';
 
 type Props = {
   class?: string;
 };
 
-export const MenuIcon: Component<Props> = (props) => {
+export function MenuIcon(props: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,4 +18,4 @@ export const MenuIcon: Component<Props> = (props) => {
       <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
   );
-};
+}
