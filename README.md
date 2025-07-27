@@ -18,5 +18,5 @@ A vibrant web game where you match colors to their corresponding RGB codes. Put 
 - **Build Tool:** [Vite](https://vitejs.dev/)
 
 ## Screenshots
-<img width="1000" height="847" alt="Screenshot 2025-07-17 012312" src="https://github.com/user-attachments/assets/1b2ba076-4880-4312-9562-a8896496732d" />
-<img width="1000" height="834" alt="Screenshot 2025-07-17 012326" src="https://github.com/user-attachments/assets/474fa946-4305-4d79-932b-bb0393e17c47" />
+<img width="1000" height="847" alt="Color Guessr with Synthwave theme" src="https://github.com/user-attachments/assets/1b2ba076-4880-4312-9562-a8896496732d" />
+<img width="1000" height="834" alt="Color Guessr with Cupcake theme" src="https://github.com/user-attachments/assets/474fa946-4305-4d79-932b-bb0393e17c47" />
